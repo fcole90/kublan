@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Pong</title>
+    <style>
+        #gameCanvas {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400px" height="300px">
+        Your browser does not support HTML5.
+    </canvas>
+    <script  type="module">
+        console.log('Hello World!');
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "red";
+        ctx.fillRect(10, 50, 30, 40);
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "kublan",
+  "version": "0.0.1",
+  "description": "Web game engine",
+  "main": "build/index.js",
+  "author": "Fabio Colella <fcole90@gmail.com>",
+  "license": "Apache",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}
