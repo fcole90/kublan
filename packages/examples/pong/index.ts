@@ -1,5 +1,5 @@
-import { ExampleGame } from ".."
-import { kublan } from "../../src/lib"
+import { ExampleGame } from "@examples/common/types"
+import { kublan } from "@kublan/engine"
 
 
 const load = async () => {

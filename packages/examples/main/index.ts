@@ -1,12 +1,7 @@
-import { game as ping } from "./ping";
-import { game as pong } from "./pong";
-
-export interface ExampleGame {
-    load: () => Promise<void>;
-}
+import { game as pong } from "@examples/pong";
+import { ExampleGame } from "@examples/common/types";
 
 const games = {
-    ping,
     pong,
 } satisfies Record<string, ExampleGame>
 
@@ -15,7 +10,11 @@ const getGameSelector = (): HTMLElement => {
     const gameSelector = document.createElement('div')
     gameSelector.setAttribute(
         'style', 
-        'display: flex; flex-direction: flex-column;',
+        `
+        display: flex; 
+        flex-direction: column;
+        gap: 0.5rem;
+        `,
     )
     const children = Object.entries(games).map(([name, game]) => {
         const button = document.createElement('button')

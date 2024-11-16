@@ -1,3 +1,5 @@
+import {foo} from './something/imported'
+
 console.log("Hello word");
 
 export const load = () => {
