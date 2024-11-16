@@ -6,13 +6,15 @@
     "scripts": {
       "dev": "vite dev",
       "build": "vite build",
-      "preview": "vite preview"
+      "preview": "vite preview",
+      "lint": "eslint ."
     },
     "peerDependencies": {
-      "vite": "*",
-      "typescript": "*",
+      "@common": "*",
       "@examples/common": "*",
-      "@examples/pong": "*"
+      "@examples/pong": "*",
+      "vite": "*",
+      "typescript": "*"
     }
   }
   
