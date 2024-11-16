@@ -4,11 +4,14 @@
   "description": "Web game engine",
   "main": "build/index.js",
   "author": "Fabio Colella <fcole90@gmail.com>",
-  "license": "Apache",
+  "license": "Apache-2.0",
   "scripts": {
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "dev": "http-server -p 3000"
   },
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "esbuild": "^0.24.0",
+    "glob": "^11.0.0",
+    "http-server": "^14.1.1"
   }
 }

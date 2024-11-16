@@ -1,7 +1,13 @@
+// @ts-check
+
 import * as esbuild from 'esbuild'
 
 await esbuild.build({
-  entryPoints: ['src/index.ts'],
+  entryPoints: ['src/lib/index.ts'],
+  sourceRoot: 'src',
   bundle: true,
-  outfile: 'build/index.js',
+  outdir: 'build',
+  loader: {
+    '.html': 'text',
+  }
 })
