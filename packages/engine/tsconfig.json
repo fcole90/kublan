@@ -5,8 +5,10 @@
     "target": "ESNext",
     "outDir": "dist",
     "checkJs": true,
-    "module": "NodeNext",
-    "moduleResolution": "nodenext"
+    "allowJs": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "**/*.ts",
