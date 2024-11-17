@@ -3,7 +3,10 @@
     "strict": true,
     "declaration": true,
     "target": "ESNext",
-    "outDir": "dist"
+    "outDir": "dist",
+    "checkJs": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext"
   },
   "include": [
     "**/*.ts",
