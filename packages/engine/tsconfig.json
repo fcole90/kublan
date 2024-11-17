@@ -4,5 +4,14 @@
     "declaration": true,
     "target": "ESNext",
     "outDir": "dist"
-  }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.js",
+    "eslint.config.mjs",
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

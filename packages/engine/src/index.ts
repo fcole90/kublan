@@ -1,4 +1,4 @@
-import {foo} from './something/imported'
+import { foo as _foo } from './something/imported'
 
 console.log("Hello word");
 
