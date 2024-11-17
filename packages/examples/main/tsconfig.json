@@ -1,0 +1,12 @@
+{
+  "extends": "../../common/tsConfigBase.json",
+  "include": [
+    "**/*.ts",
+    "**/*.js",
+    "eslint.config.mjs",
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}

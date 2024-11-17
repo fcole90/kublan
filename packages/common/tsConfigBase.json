@@ -7,7 +7,7 @@
     "checkJs": true,
     "allowJs": true,
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   }
 }
