@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <title>Examples</title>
 </head>
+
 <body>
     <div id="root"></div>
     <script type="module">
         import { examples } from './index';
-        examples.load()
+        examples.load(document.getElementById('root'))
     </script>
 </body>

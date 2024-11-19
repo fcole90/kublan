@@ -6,10 +6,10 @@ const games = {
 } satisfies Record<string, ExampleGame>
 
 
-const getGameSelector = (): HTMLElement => {
+const getGameSelector = (rootElement: HTMLElement): HTMLElement => {
     const gameSelector = document.createElement('div')
     gameSelector.setAttribute(
-        'style', 
+        'style',
         `
         display: flex; 
         flex-direction: column;
@@ -19,17 +19,16 @@ const getGameSelector = (): HTMLElement => {
     const children = Object.entries(games).map(([name, game]) => {
         const button = document.createElement('button')
         button.textContent = name;
-        button.onclick = game.load
+        button.onclick = () => game.load(rootElement)
         return button;
     })
     gameSelector.replaceChildren(...children)
     return gameSelector;
-} 
+}
 
 
-const load = async () => {
-    const root = document.getElementById('root')
-    root?.replaceChildren(getGameSelector())
+const load = async (rootElement: HTMLElement) => {
+    rootElement?.replaceChildren(getGameSelector(rootElement))
 }
 
 export const examples: ExampleGame = {

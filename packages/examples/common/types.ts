@@ -1,3 +1,3 @@
 export interface ExampleGame {
-  load: () => Promise<void>;
+  load: (rootElement: HTMLElement) => Promise<void>;
 }

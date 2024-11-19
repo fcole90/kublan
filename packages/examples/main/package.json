@@ -1,20 +1,20 @@
 {
-    "name": "@examples/main",
-    "version": "0.0.1",
-    "author": "Fabio Colella <fcole90@gmail.com>",
-    "license": "Apache-2.0",
-    "scripts": {
-      "dev": "vite dev",
-      "build": "vite build",
-      "preview": "vite preview",
-      "lint": "eslint ."
-    },
-    "peerDependencies": {
-      "@common": "*",
-      "@examples/common": "*",
-      "@examples/pong": "*",
-      "vite": "*",
-      "typescript": "*"
-    }
+  "name": "@examples/main",
+  "version": "0.0.1",
+  "author": "Fabio Colella <fcole90@gmail.com>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "tsc": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@common": "*",
+    "@examples/common": "*",
+    "@examples/pong": "*",
+    "vite": "*",
+    "typescript": "*"
   }
-  
+}
