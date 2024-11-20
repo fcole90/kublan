@@ -1,17 +1,18 @@
 import { settings } from "./gameSettings"
-import { Player } from "./Player"
-import { Vector2D } from "./Vector2D"
+import { Player } from "./scenes/main/Player"
+import { Vector2D } from "./primitives/Vector2D"
 
 export class Pong {
   readonly ctx: CanvasRenderingContext2D
   private lastFrameMs: number = Date.now()
   private shouldStop: boolean = true
   private pressedKeys: Set<string> = new Set([])
-  private player: Player = new Player({ x: 0, y: 0 })
+  private player: Player
   private playerSpeed: number = 0.15
 
   constructor(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx
+    this.player = new Player({ x: 0, y: 0 })
   }
 
   render(eps: number) {
@@ -34,13 +35,12 @@ export class Pong {
       translate.x += this.playerSpeed * eps
     }
 
-    this.player.position.x += translate.x
-    this.player.position.y += translate.y
+    this.player.updatePosition(this.player.rect.getPosition().add(translate))
 
-    this.ctx.clearRect(0, 0, settings.size.width, settings.size.width)
+    this.ctx.clearRect(0, 0, settings.viewportSize.width, settings.viewportSize.width)
 
     this.ctx.fillStyle = 'blue'
-    this.ctx.fillRect(this.player.position.x, this.player.position.y, 20, 20)
+    this.ctx.fillRect(this.player.rect.x, this.player.rect.y, 20, 20)
   }
 
   private loop() {

@@ -37,7 +37,7 @@ const createGameCanvas = ({ width, height }: CreateGameCanvasOptions): HTMLCanva
 
 const load: ExampleGame['load'] = async (rootElement) => {
     resetHTML(rootElement, settings.pageBackgroundColor)
-    const gameCanvas = createGameCanvas(settings.size)
+    const gameCanvas = createGameCanvas(settings.viewportSize)
     rootElement.replaceChildren(gameCanvas)
 
     const ctx = gameCanvas.getContext('2d')

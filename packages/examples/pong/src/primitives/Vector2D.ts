@@ -20,4 +20,12 @@ export class Vector2D {
       this.y = initializer.y
     }
   }
+
+  add(vectorInitializer: Vector2DInitializer) {
+    const vector = new Vector2D(vectorInitializer)
+    vector.x += this.x
+    vector.y += this.y
+    return vector
+  }
+
 }
