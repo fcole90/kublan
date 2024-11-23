@@ -11,7 +11,13 @@ export class Vector2D {
   x: number
   y: number
 
-  constructor(initializer: Vector2DInitializer) {
+  constructor(initializer?: Vector2DInitializer) {
+    if (initializer == null) {
+      this.x = 0
+      this.y = 0
+      return
+    }
+
     if (initializer instanceof Array) {
       this.x = initializer[0]
       this.y = initializer[1]
@@ -21,15 +27,31 @@ export class Vector2D {
     }
   }
 
+  isNull() {
+    return this.x === 0 && this.y === 0
+  }
+
+  add(vectorOperand: Readonly<Vector2D>) {
+    const result = new Vector2D([
+      this.x + vectorOperand.x,
+      this.y + vectorOperand.y
+    ])
+    return result
+  }
+
+  sub(vectorOperand: Readonly<Vector2D>) {
+    return new Vector2D([
+      this.x - vectorOperand.x,
+      this.y - vectorOperand.y
+    ])
+  }
+
+  norm() {
+    const magnitude = Math.sqrt(this.x ** 2 + this.y ** 2)
+    return new Vector2D([this.x / magnitude, this.y / magnitude])
+  }
+
   toArray(): Vector2DArray {
     return [this.x, this.y]
   }
-
-  add(vectorInitializer: Vector2DInitializer) {
-    const vector = new Vector2D(vectorInitializer)
-    vector.x += this.x
-    vector.y += this.y
-    return vector
-  }
-
 }

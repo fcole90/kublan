@@ -1,5 +1,5 @@
 import type { GameSettings } from "../gameSettings";
-import { Rectangle } from "../primitives/Rectangle"
+import { Rectangle, RectangleInitializer } from "../primitives/Rectangle"
 
 export class Renderer {
   readonly ctx: CanvasRenderingContext2D
@@ -10,7 +10,8 @@ export class Renderer {
     this.settings = settings
   }
 
-  drawRectangle(rect: Rectangle, color: string) {
+  drawRectangle(rectInitializer: RectangleInitializer, color: string) {
+    const rect = new Rectangle(rectInitializer)
     this.ctx.fillStyle = color;
     this.ctx.fillRect(...rect.toArray())
   }

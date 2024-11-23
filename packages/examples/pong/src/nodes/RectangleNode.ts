@@ -1,24 +1,22 @@
 import { Rectangle, RectangleInitializer } from "../primitives/Rectangle";
 import { Vector2D } from "../primitives/Vector2D";
 import { Renderer } from "../render/Renderer";
-import { BaseNode } from "./Node"
+import { BaseNode, BaseNodeConfig } from "./BaseNode";
+
+export interface RectangleNodeConfig extends BaseNodeConfig {
+  size: Vector2D
+}
 
 export class RectangleNode extends BaseNode {
-  rect: Rectangle
+  size: Vector2D
   color: string = 'white'
 
-  constructor(rectangle: RectangleInitializer) {
-    super()
-    this.rect = new Rectangle(rectangle)
+  constructor(config: RectangleNodeConfig) {
+    super(config)
+    this.size = new Vector2D(config.size)
   }
 
-  updatePosition(position: Vector2D) {
-    this.rect.x = position.x
-    this.rect.y = position.y
-  }
-
-  render(renderer: Renderer, basePosition?: Vector2D) {
-    const position = basePosition != null ? this.rect.getPosition().add(basePosition) : this.rect.getPosition()
-    renderer.drawRectangle(new Rectangle([position.x, position.y, this.rect.w, this.rect.h]), this.color)
+  render(renderer: Renderer) {
+    renderer.drawRectangle([...this.getAbsolutePosition().toArray(), ...this.size.toArray()], this.color)
   }
 }
