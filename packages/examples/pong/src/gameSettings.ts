@@ -8,3 +8,5 @@ export const settings = {
   pageBackgroundColor: 'black',
   targetFPS: 30,
 } as const;
+
+export type GameSettings = typeof settings

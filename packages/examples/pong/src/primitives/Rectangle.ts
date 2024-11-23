@@ -38,4 +38,8 @@ export class Rectangle {
   getSize() {
     return new Vector2D([this.w, this.h])
   }
+
+  toArray(): RectangleArray {
+    return [this.x, this.y, this.w, this.h]
+  }
 }

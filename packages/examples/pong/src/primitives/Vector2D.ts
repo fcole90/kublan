@@ -21,6 +21,10 @@ export class Vector2D {
     }
   }
 
+  toArray(): Vector2DArray {
+    return [this.x, this.y]
+  }
+
   add(vectorInitializer: Vector2DInitializer) {
     const vector = new Vector2D(vectorInitializer)
     vector.x += this.x
