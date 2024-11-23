@@ -16,7 +16,8 @@ export class Pong {
   start() {
     this.shouldStop = false
 
-    this.root.addChildNode(new PlayerNode({ initialPosition: [10, 20] }))
+    this.root.addChildNode(new PlayerNode({ initialPosition: [10, 20], isUserControlled: true }))
+    this.root.addChildNode(new PlayerNode({ initialPosition: [settings.viewportSize.width - 50, settings.viewportSize.height / 2] }))
     this.root.start()
 
     this.loop(Date.now())
