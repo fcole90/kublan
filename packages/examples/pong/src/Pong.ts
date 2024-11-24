@@ -16,8 +16,8 @@ export class Pong {
   start() {
     this.shouldStop = false
 
-    const mainPlayer = new Player({ initialPosition: [10, 20], isUserControlled: true })
-    const otherPlayer = new Player({ initialPosition: [settings.viewportSize.width - 50, settings.viewportSize.height / 2] })
+    const mainPlayer = new Player({ position: [10, 20], isUserControlled: true })
+    const otherPlayer = new Player({ position: [settings.viewportSize.width - 50, settings.viewportSize.height / 2] })
 
     this.root.addChildNode(mainPlayer)
     this.root.addChildNode(otherPlayer)

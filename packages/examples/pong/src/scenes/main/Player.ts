@@ -18,13 +18,13 @@ export class Player extends Node2D {
 
   constructor(config: PlayerNodeConfig) {
     super({
-      initialPosition: new Vector2D(config.initialPosition),
+      position: new Vector2D(config.position),
     })
     this.config = config
 
     this.playerSpeed = 0.15
     this.shape = new Shape2D({
-      initialPosition: [0, 0],
+      position: [0, 0],
       size: [20, 80],
       shapeType: shape2Dtypes.rectangle
     })
@@ -78,9 +78,6 @@ export class Player extends Node2D {
 
   update(eps: number) {
     const direction = this.getInputVector()
-
-
-
     if (!direction.isNull()) {
       const normDir = direction.norm()
       const translation = new Vector2D([normDir.x * this.playerSpeed * eps, normDir.y * this.playerSpeed * eps])

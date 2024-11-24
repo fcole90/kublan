@@ -4,7 +4,7 @@ import { Node2D, treeApply } from "./Node2D";
 
 export class Area2D extends Node2D {
   constructor() {
-    super({ initialPosition: [20, 20] })
+    super({ position: [20, 20] })
   }
 
   start(...args: Parameters<Node2D['start']>) {
@@ -15,7 +15,7 @@ export class Area2D extends Node2D {
     treeApply(this, (node) => {
       node.update(...args)
       for (const childNode of node.getChildren()) {
-        childNode.setParentPosition(node.getPosition())
+        childNode.setAbsoluteParentPosition(node.getPosition())
       }
     })
   }
