@@ -1,4 +1,4 @@
-import { Vector2D } from "./Vector2D"
+import { Vector2 } from "./Vector2"
 
 export type RectangleArray = [number, number, number, number]
 
@@ -32,11 +32,11 @@ export class Rectangle {
   }
 
   getPosition() {
-    return new Vector2D([this.x, this.y])
+    return new Vector2([this.x, this.y])
   }
 
   getSize() {
-    return new Vector2D([this.w, this.h])
+    return new Vector2([this.w, this.h])
   }
 
   toArray(): RectangleArray {

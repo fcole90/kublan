@@ -5,9 +5,9 @@ export interface Vector2DInterface {
   y: number
 }
 
-export type Vector2DInitializer = Vector2DInterface | Vector2DArray | Vector2D
+export type Vector2DInitializer = Readonly<Vector2DInterface | Vector2DArray | Vector2>
 
-export class Vector2D {
+export class Vector2 {
   x: number
   y: number
 
@@ -31,16 +31,16 @@ export class Vector2D {
     return this.x === 0 && this.y === 0
   }
 
-  add(vectorOperand: Readonly<Vector2D>) {
-    const result = new Vector2D([
+  add(vectorOperand: Readonly<Vector2>) {
+    const result = new Vector2([
       this.x + vectorOperand.x,
       this.y + vectorOperand.y
     ])
     return result
   }
 
-  sub(vectorOperand: Readonly<Vector2D>) {
-    return new Vector2D([
+  sub(vectorOperand: Readonly<Vector2>) {
+    return new Vector2([
       this.x - vectorOperand.x,
       this.y - vectorOperand.y
     ])
@@ -49,10 +49,10 @@ export class Vector2D {
   norm() {
     const magnitude = Math.sqrt(this.x ** 2 + this.y ** 2)
     if (magnitude === 0) {
-      return new Vector2D([0, 0])
+      return new Vector2([0, 0])
     }
 
-    return new Vector2D([this.x / magnitude, this.y / magnitude])
+    return new Vector2([this.x / magnitude, this.y / magnitude])
   }
 
   toArray(): Vector2DArray {

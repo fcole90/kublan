@@ -32,7 +32,7 @@ export class Pong {
   }
 
   render(eps: number) {
-    console.debug(Date.now(), 'EPS:', eps, "FPS:", 1000 / eps)
+    // console.debug(Date.now(), 'EPS:', eps, "FPS:", 1000 / eps)
     this.renderer.clear()
     this.root.render(this.renderer)
   }

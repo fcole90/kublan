@@ -1,7 +1,7 @@
+import { CollisionShape2D } from "../../nodes/CollisionShape2D";
 import { Node2D, Node2DConfig } from "../../nodes/Node2D";
 import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
-import { Vector2D } from "../../primitives/Vector2D";
-import { Renderer } from "../../render/Renderer";
+import { Vector2 } from "../../primitives/Vector2";
 
 
 interface PlayerNodeConfig extends Node2DConfig {
@@ -14,21 +14,32 @@ export class Player extends Node2D {
 
   private playerSpeed: number = 0.15
   private readonly shape: Shape2D
+  private readonly collisionShape: CollisionShape2D
 
 
   constructor(config: PlayerNodeConfig) {
     super({
-      position: new Vector2D(config.position),
+      position: new Vector2(config.position),
     })
     this.config = config
 
     this.playerSpeed = 0.15
+
+    const position = [0, 0] as const
+    const size = [20, 80] as const
+
     this.shape = new Shape2D({
-      position: [0, 0],
-      size: [20, 80],
+      position,
+      size,
       shapeType: shape2Dtypes.rectangle
     })
     this.addChildNode(this.shape)
+    this.collisionShape = new CollisionShape2D({
+      id: this.config.isUserControlled ? 'player' : 'enemy',
+      position,
+      size,
+    })
+    this.addChildNode(this.collisionShape)
   }
 
   setupInputHandling() {
@@ -54,7 +65,7 @@ export class Player extends Node2D {
   }
 
   getInputVector() {
-    const direction = new Vector2D([0, 0])
+    const direction = new Vector2([0, 0])
     if (this.pressedKeys.has('ArrowUp')) {
       direction.y -= 1
     }
@@ -80,12 +91,8 @@ export class Player extends Node2D {
     const direction = this.getInputVector()
     if (!direction.isNull()) {
       const normDir = direction.norm()
-      const translation = new Vector2D([normDir.x * this.playerSpeed * eps, normDir.y * this.playerSpeed * eps])
+      const translation = new Vector2([normDir.x * this.playerSpeed * eps, normDir.y * this.playerSpeed * eps])
       this.setPosition(this.getPosition().add(translation))
     }
-  }
-
-  render(renderer: Renderer): void {
-    console.log('Render from Player')
   }
 }

@@ -1,4 +1,4 @@
-import { Vector2D, Vector2DInitializer } from "../primitives/Vector2D";
+import { Vector2, Vector2DInitializer } from "../primitives/Vector2";
 import { Renderer } from "../render/Renderer";
 
 export const treeApply = (node: Node2D, callBack: (node: Node2D) => void) => {
@@ -6,6 +6,15 @@ export const treeApply = (node: Node2D, callBack: (node: Node2D) => void) => {
     callBack(childNode)
     treeApply(childNode, callBack)
   }
+}
+
+export const treeToArray = (node: Node2D): Node2D[] => {
+  const nodeArray: Node2D[] = [node]
+  for (const childNode of node.getChildren()) {
+    nodeArray.push(...treeToArray(childNode))
+  }
+
+  return nodeArray
 }
 
 export interface Node2DConfig {
@@ -17,15 +26,15 @@ export interface Node2DConfig {
 
 export class Node2D {
   public readonly id: symbol
-  private absoluteParentPosition: Vector2D
-  private position: Vector2D
-  private size: Vector2D
+  private absoluteParentPosition: Vector2
+  private position: Vector2
+  private size: Vector2
   private children: Array<Node2D> = []
 
   constructor(config: Node2DConfig) {
-    this.position = new Vector2D(config.position)
-    this.size = new Vector2D(config.size)
-    this.absoluteParentPosition = new Vector2D(config.absoluteParentPosition)
+    this.position = new Vector2(config.position)
+    this.size = new Vector2(config.size)
+    this.absoluteParentPosition = new Vector2(config.absoluteParentPosition)
     this.id = Symbol(config.id)
   }
 
@@ -38,33 +47,33 @@ export class Node2D {
     return this.children
   }
 
-  getPosition(): Readonly<Vector2D> {
+  getPosition(): Readonly<Vector2> {
     return this.position
   }
 
   setPosition(position: Vector2DInitializer) {
-    this.position = new Vector2D(position)
+    this.position = new Vector2(position)
   }
 
   setAbsoluteParentPosition(position: Vector2DInitializer) {
-    this.absoluteParentPosition = new Vector2D(position)
+    this.absoluteParentPosition = new Vector2(position)
   }
 
-  getAbsolutePosition(): Readonly<Vector2D> {
+  getAbsolutePosition(): Readonly<Vector2> {
     return this.absoluteParentPosition.add(this.position)
   }
 
-  getSize(): Readonly<Vector2D> {
+  getSize(): Readonly<Vector2> {
     return this.size
   }
 
   setSize(size: Vector2DInitializer) {
-    this.size = new Vector2D(size)
+    this.size = new Vector2(size)
   }
 
   start() { }
 
-  update(eps: number) { }
+  update(_eps: number) { }
 
-  render(renderer: Renderer) { }
+  render(_renderer: Renderer) { }
 }

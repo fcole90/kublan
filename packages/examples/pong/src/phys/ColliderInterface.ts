@@ -1,5 +1,5 @@
-import type { Node2D } from "../nodes/Node2D"
-import { Vector2D } from "../primitives/Vector2D"
+import { Rectangle } from "../primitives/Rectangle"
+import { Vector2 } from "../primitives/Vector2"
 
 export const colliderTypes = {
   box2D: 'box2D'
@@ -8,7 +8,8 @@ export const colliderTypes = {
 export type ColliderType = keyof typeof colliderTypes
 
 export interface ColliderInterface {
+  id: symbol
   colliderType: ColliderType
-  getSize: () => Vector2D
-  getAbsolutePosition: () => Vector2D
+  getSize: () => Vector2
+  getBoundingBox: () => Rectangle
 }

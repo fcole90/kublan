@@ -1,5 +1,6 @@
-import { Vector2DInitializer } from "../primitives/Vector2D";
+import { Vector2DInitializer } from "../primitives/Vector2";
 import { Renderer } from "../render/Renderer";
+import { checkExhaustiveCondition } from "../utils/typing/checkExhaustiveConditon";
 import { Node2D, Node2DConfig } from "./Node2D";
 
 export const shape2Dtypes = {
@@ -25,19 +26,17 @@ export class Shape2D extends Node2D {
     this.shapeType = config.shapeType
   }
 
-  start(): void { }
-
-  update(eps: number): void { }
-
   render(renderer: Renderer) {
     switch (this.shapeType) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       case shape2Dtypes.rectangle: {
         renderer.drawRectangle([...this.getAbsolutePosition().toArray(), ...this.getSize().toArray()], this.color)
         break
       }
 
-      default:
-        throw new Error('Shape ' + this.shapeType + 'not supported')
+      default: {
+        checkExhaustiveCondition(this.shapeType, (strRepr) => 'Shape ' + strRepr + 'not supported')
+      }
     }
   }
 }
