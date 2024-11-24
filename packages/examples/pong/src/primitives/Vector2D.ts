@@ -48,6 +48,10 @@ export class Vector2D {
 
   norm() {
     const magnitude = Math.sqrt(this.x ** 2 + this.y ** 2)
+    if (magnitude === 0) {
+      return new Vector2D([0, 0])
+    }
+
     return new Vector2D([this.x / magnitude, this.y / magnitude])
   }
 

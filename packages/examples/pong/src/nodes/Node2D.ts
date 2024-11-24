@@ -1,32 +1,32 @@
 import { Vector2D, Vector2DInitializer } from "../primitives/Vector2D";
 import { Renderer } from "../render/Renderer";
 
-export const treeApply = (node: BaseNode, callBack: (node: BaseNode) => void) => {
+export const treeApply = (node: Node2D, callBack: (node: Node2D) => void) => {
   for (const childNode of node.getChildren()) {
     callBack(childNode)
     treeApply(childNode, callBack)
   }
 }
 
-export interface BaseNodeConfig {
+export interface Node2DConfig {
   initialPosition: Vector2DInitializer
 }
 
-export class BaseNode {
+export class Node2D {
   private parentPosition: Vector2D
   private position: Vector2D
-  private children: Array<BaseNode> = []
+  private children: Array<Node2D> = []
 
-  constructor(config: BaseNodeConfig) {
+  constructor(config: Node2DConfig) {
     this.position = new Vector2D(config.initialPosition)
     this.parentPosition = new Vector2D([0, 0])
   }
 
-  addChildNode(childNode: BaseNode) {
+  addChildNode(childNode: Node2D) {
     this.children.push(childNode)
   }
 
-  getChildren(): Readonly<Array<BaseNode>> {
+  getChildren(): Readonly<Array<Node2D>> {
     return this.children
   }
 
@@ -48,13 +48,7 @@ export class BaseNode {
 
   start() { }
 
-  update(eps: number) {
-    console.warn('Update on a BaseNode has no effect')
-  }
+  update(eps: number) { }
 
-  render(renderer: Renderer) {
-    console.warn('Render on a BaseNode has no effect')
-  }
-
-
+  render(renderer: Renderer) { }
 }
