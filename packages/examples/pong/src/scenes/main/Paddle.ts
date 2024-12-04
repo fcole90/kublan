@@ -1,29 +1,30 @@
 import { CollisionShape2D } from "../../nodes/CollisionShape2D";
 import { Node2D, Node2DConfig } from "../../nodes/Node2D";
 import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
+import { colliderTypes } from "../../phys/ColliderInterface";
 import { Vector2 } from "../../primitives/Vector2";
 
 
-interface PlayerNodeConfig extends Node2DConfig {
+interface PaddleNodeConfig extends Node2DConfig {
   isUserControlled?: boolean
 }
 
-export class Player extends Node2D {
-  private config: PlayerNodeConfig
+export class Paddle extends Node2D {
+  private config: PaddleNodeConfig
   private pressedKeys: Set<string> = new Set([])
 
-  private playerSpeed: number = 0.15
+  private speed: number = 0.15
   private readonly shape: Shape2D
   private readonly collisionShape: CollisionShape2D
 
 
-  constructor(config: PlayerNodeConfig) {
+  constructor(config: PaddleNodeConfig) {
     super({
       position: new Vector2(config.position),
     })
     this.config = config
 
-    this.playerSpeed = 0.15
+    this.speed = 0.15
 
     const position = [0, 0] as const
     const size = [20, 80] as const
@@ -36,6 +37,7 @@ export class Player extends Node2D {
     this.addChildNode(this.shape)
     this.collisionShape = new CollisionShape2D({
       id: this.config.isUserControlled ? 'player' : 'enemy',
+      colliderType: colliderTypes.rect,
       position,
       size,
     })
@@ -91,7 +93,7 @@ export class Player extends Node2D {
     const direction = this.getInputVector()
     if (!direction.isNull()) {
       const normDir = direction.norm()
-      const translation = new Vector2([normDir.x * this.playerSpeed * eps, normDir.y * this.playerSpeed * eps])
+      const translation = new Vector2([normDir.x * this.speed * eps, normDir.y * this.speed * eps])
       this.setPosition(this.getPosition().add(translation))
     }
   }

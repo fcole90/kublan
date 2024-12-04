@@ -1,17 +1,17 @@
-export type Vector2DArray = [number, number]
+export type Vector2Array = [number, number]
 
-export interface Vector2DInterface {
+export interface Vector2Interface {
   x: number,
   y: number
 }
 
-export type Vector2DInitializer = Readonly<Vector2DInterface | Vector2DArray | Vector2>
+export type Vector2Initializer = Readonly<Vector2Interface | Vector2Array | Vector2>
 
 export class Vector2 {
   x: number
   y: number
 
-  constructor(initializer?: Vector2DInitializer) {
+  constructor(initializer?: Vector2Initializer) {
     if (initializer == null) {
       this.x = 0
       this.y = 0
@@ -55,7 +55,7 @@ export class Vector2 {
     return new Vector2([this.x / magnitude, this.y / magnitude])
   }
 
-  toArray(): Vector2DArray {
+  toArray(): Vector2Array {
     return [this.x, this.y]
   }
 }

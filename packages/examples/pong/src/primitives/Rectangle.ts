@@ -35,6 +35,13 @@ export class Rectangle {
     return new Vector2([this.x, this.y])
   }
 
+  getCenter() {
+    return new Vector2([
+      (this.w - this.x / 2),
+      (this.h - this.y / 2),
+    ])
+  }
+
   getSize() {
     return new Vector2([this.w, this.h])
   }

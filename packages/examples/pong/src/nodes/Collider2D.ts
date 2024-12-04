@@ -10,7 +10,7 @@ export interface Collider2DConfig extends Node2DConfig {
 export type Collider2DMap = Record<symbol, Collider2D>;
 
 export abstract class Collider2D extends Node2D implements ColliderInterface {
-  colliderType: ColliderType = colliderTypes.box2D;
+  colliderType: ColliderType = colliderTypes.rect;
   private colliders: Record<symbol, Collider2D | undefined> = {};
 
 

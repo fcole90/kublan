@@ -33,15 +33,27 @@ export const areColliding = (colliderA: ColliderInterface, colliderB: ColliderIn
     return false
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (colliderA.colliderType === colliderTypes.box2D && colliderB.colliderType === colliderTypes.box2D) {
-    return areBox2DColliding(colliderA, colliderB)
+  if (colliderA.colliderType === colliderTypes.circle && colliderB.colliderType === colliderTypes.circle) {
+    return areCirclesColliding(colliderA, colliderB)
+  }
+
+
+  if (colliderA.colliderType === colliderTypes.rect && colliderB.colliderType === colliderTypes.rect) {
+    return areRectsColliding(colliderA, colliderB)
+  }
+
+  if (colliderA.colliderType === colliderTypes.circle && colliderB.colliderType === colliderTypes.rect) {
+    return areRectsColliding(colliderA, colliderB)
+  }
+
+  if (colliderA.colliderType === colliderTypes.rect && colliderB.colliderType === colliderTypes.circle) {
+    return areRectsColliding(colliderA, colliderB)
   }
 
   throw new Error('Collision between ' + colliderA.colliderType + ' and ' + colliderB.colliderType + ' not supported')
 }
 
-export const areBox2DColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
+export const areRectsColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
   const rectA = colliderA.getBoundingBox()
   const rectB = colliderB.getBoundingBox()
 
@@ -55,4 +67,20 @@ export const areBox2DColliding = (colliderA: ColliderInterface, colliderB: Colli
   }
 
   return false
+}
+
+export const areCirclesColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
+  const rectA = colliderA.getBoundingBox()
+  const rectB = colliderB.getBoundingBox()
+
+  const centerA = rectA.getCenter()
+  const centerB = rectB.getCenter()
+  const radiusA = rectA.w - rectB.x
+  const radiusB = rectB.w - rectB.x
+
+  const collisionDistanceSquared = Math.pow(radiusA + radiusB, 2)
+  const centerDistanceSquared = Math.pow(centerA.x - centerB.x, 2) + Math.pow(centerA.y - centerB.y, 2)
+
+
+  return centerDistanceSquared < collisionDistanceSquared
 }

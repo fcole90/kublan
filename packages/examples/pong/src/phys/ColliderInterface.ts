@@ -2,7 +2,8 @@ import { Rectangle } from "../primitives/Rectangle"
 import { Vector2 } from "../primitives/Vector2"
 
 export const colliderTypes = {
-  box2D: 'box2D'
+  rect: 'rect',
+  circle: 'circle'
 } as const
 
 export type ColliderType = keyof typeof colliderTypes

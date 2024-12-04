@@ -1,4 +1,4 @@
-import { Vector2, Vector2DInitializer } from "../primitives/Vector2";
+import { Vector2, Vector2Initializer } from "../primitives/Vector2";
 import { Renderer } from "../render/Renderer";
 
 export const treeApply = (node: Node2D, callBack: (node: Node2D) => void) => {
@@ -19,9 +19,9 @@ export const treeToArray = (node: Node2D): Node2D[] => {
 
 export interface Node2DConfig {
   id?: string
-  position?: Vector2DInitializer
-  absoluteParentPosition?: Vector2DInitializer
-  size?: Vector2DInitializer
+  position?: Vector2Initializer
+  absoluteParentPosition?: Vector2Initializer
+  size?: Vector2Initializer
 }
 
 export class Node2D {
@@ -51,11 +51,11 @@ export class Node2D {
     return this.position
   }
 
-  setPosition(position: Vector2DInitializer) {
+  setPosition(position: Vector2Initializer) {
     this.position = new Vector2(position)
   }
 
-  setAbsoluteParentPosition(position: Vector2DInitializer) {
+  setAbsoluteParentPosition(position: Vector2Initializer) {
     this.absoluteParentPosition = new Vector2(position)
   }
 
@@ -67,7 +67,7 @@ export class Node2D {
     return this.size
   }
 
-  setSize(size: Vector2DInitializer) {
+  setSize(size: Vector2Initializer) {
     this.size = new Vector2(size)
   }
 

@@ -1,7 +1,8 @@
 import { settings } from "./gameSettings"
-import { Player } from "./scenes/main/Player"
+import { Paddle } from "./scenes/main/Paddle"
 import { Renderer } from "./render/Renderer"
 import { Area2D } from "./nodes/Area2D"
+import { Ball } from "./scenes/main/Ball"
 
 export class Pong {
   private renderer: Renderer
@@ -16,11 +17,13 @@ export class Pong {
   start() {
     this.shouldStop = false
 
-    const mainPlayer = new Player({ position: [10, 20], isUserControlled: true })
-    const otherPlayer = new Player({ position: [settings.viewportSize.width - 50, settings.viewportSize.height / 2] })
+    const mainPlayer = new Paddle({ position: [10, 20], isUserControlled: true })
+    const otherPlayer = new Paddle({ position: [settings.viewportSize.width - 50, settings.viewportSize.height / 2] })
+    const ball = new Ball({ position: [settings.viewportSize.width / 2 - 20, settings.viewportSize.height / 2 - 20] })
 
     this.root.addChildNode(mainPlayer)
     this.root.addChildNode(otherPlayer)
+    this.root.addChildNode(ball)
 
     this.root.start()
 
@@ -31,7 +34,7 @@ export class Pong {
     this.root.update(eps)
   }
 
-  render(eps: number) {
+  render(_eps: number) {
     // console.debug(Date.now(), 'EPS:', eps, "FPS:", 1000 / eps)
     this.renderer.clear()
     this.root.render(this.renderer)
