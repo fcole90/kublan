@@ -39,7 +39,6 @@ export class Node2D {
   }
 
   addChildNode(childNode: Node2D) {
-    childNode.setAbsoluteParentPosition(this.getAbsolutePosition())
     this.children.push(childNode)
   }
 
