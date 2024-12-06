@@ -1,11 +1,10 @@
 import { ExampleGame } from "@examples/common/types"
-import { kublan } from "@kublan/engine"
+// import { kublan } from "@kublan/engine"
 import { settings } from "./src/gameSettings"
 import { Pong } from "./src/Pong"
 
 interface CreateGameCanvasOptions {
-    width: number,
-    height: number,
+    size: { x: number, y: number }
 }
 
 const resetHTML = (rootElement: HTMLElement, backgroundColor: string) => {
@@ -22,12 +21,13 @@ const resetHTML = (rootElement: HTMLElement, backgroundColor: string) => {
         `)
 }
 
-const createGameCanvas = ({ width, height }: CreateGameCanvasOptions): HTMLCanvasElement => {
+const createGameCanvas = ({ size }: CreateGameCanvasOptions): HTMLCanvasElement => {
     const canvas = document.createElement('canvas')
-    canvas.width = width
-    canvas.height = height
+    canvas.width = size.x
+    canvas.height = size.y
     canvas.setAttribute('style', `
          image-rendering: pixelated;
+         background-color: red;
         `)
 
 
@@ -35,9 +35,10 @@ const createGameCanvas = ({ width, height }: CreateGameCanvasOptions): HTMLCanva
 }
 
 
+// eslint-disable-next-line @typescript-eslint/require-await
 const load: ExampleGame['load'] = async (rootElement) => {
     resetHTML(rootElement, settings.pageBackgroundColor)
-    const gameCanvas = createGameCanvas(settings.viewportSize)
+    const gameCanvas = createGameCanvas({ size: settings.viewportSize })
     rootElement.replaceChildren(gameCanvas)
 
     const ctx = gameCanvas.getContext('2d')

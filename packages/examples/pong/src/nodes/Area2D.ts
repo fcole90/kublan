@@ -3,10 +3,11 @@ import { Collider2D } from "./Collider2D";
 import { Node2D, treeApply, treeToArray } from "./Node2D";
 
 
-
 export class Area2D extends Node2D {
   constructor() {
-    super({ position: [20, 20] })
+    super({
+      position: [0, 0]
+    })
   }
 
   start(...args: Parameters<Node2D['start']>) {
@@ -30,12 +31,16 @@ export class Area2D extends Node2D {
 
 
     treeApply(this, (node) => {
+      // Apply collision
       if (node instanceof Collider2D) {
         node.setColliders(collidedCollidersMap[node.id])
       }
+      // Apply update
       node.update(...args)
+
+      // Update children's position relatively to the parent node
       for (const childNode of node.getChildren()) {
-        childNode.setAbsoluteParentPosition(node.getPosition())
+        childNode.setAbsoluteParentPosition(node.getAbsolutePosition())
       }
     })
   }

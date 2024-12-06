@@ -27,7 +27,7 @@ export class Paddle extends Node2D {
     this.speed = 0.15
 
     const position = [0, 0] as const
-    const size = [20, 80] as const
+    const size = [10, 80] as const
 
     this.shape = new Shape2D({
       position,

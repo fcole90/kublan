@@ -1,11 +1,9 @@
+import { Vector2 } from "./primitives/Vector2";
 
 
 export const settings = {
-  viewportSize: {
-    width: 800,
-    height: 600
-  },
-  pageBackgroundColor: 'black',
+  viewportSize: new Vector2([800, 600]),
+  pageBackgroundColor: 'pink',
   targetFPS: 30,
 } as const;
 

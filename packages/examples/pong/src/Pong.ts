@@ -3,6 +3,7 @@ import { Paddle } from "./scenes/main/Paddle"
 import { Renderer } from "./render/Renderer"
 import { Area2D } from "./nodes/Area2D"
 import { Ball } from "./scenes/main/Ball"
+import { Shape2D, shape2Dtypes } from "./nodes/Shape2D"
 
 export class Pong {
   private renderer: Renderer
@@ -17,16 +18,29 @@ export class Pong {
   start() {
     this.shouldStop = false
 
-    const mainPlayer = new Paddle({ position: [10, 20], isUserControlled: true })
-    const otherPlayer = new Paddle({ position: [settings.viewportSize.width - 50, settings.viewportSize.height / 2] })
-    const ball = new Ball({ position: [settings.viewportSize.width / 2 - 20, settings.viewportSize.height / 2 - 20] })
+    const field = new Shape2D({
+      position: [0, 0],
+      size: settings.viewportSize,
+      shapeType: shape2Dtypes.rectangle,
+      color: 'green'
+    })
+    const mainPlayer = new Paddle({
+      position: [0, settings.viewportSize.y / 2 - 40],
+      isUserControlled: true
+    })
+    const otherPlayer = new Paddle({
+      position: [settings.viewportSize.x - 10, settings.viewportSize.y / 2 - 40]
+    })
+    const ball = new Ball({
+      position: [settings.viewportSize.x / 2 - 20, settings.viewportSize.x / 2 - 20]
+    })
 
-    this.root.addChildNode(mainPlayer)
-    this.root.addChildNode(otherPlayer)
-    this.root.addChildNode(ball)
+    this.root.addChildNode(field)
+    field.addChildNode(mainPlayer)
+    field.addChildNode(otherPlayer)
+    field.addChildNode(ball)
 
     this.root.start()
-
     this.loop(Date.now())
   }
 
