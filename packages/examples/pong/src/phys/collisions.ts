@@ -1,3 +1,5 @@
+import { Rectangle } from "../primitives/Rectangle";
+import { Vector2, Vector2Array } from "../primitives/Vector2";
 import { ColliderInterface, colliderTypes } from "./ColliderInterface";
 
 export const detectCollisions = (colliders: ColliderInterface[]): Record<symbol, Record<symbol, boolean>> => {
@@ -42,18 +44,18 @@ export const areColliding = (colliderA: ColliderInterface, colliderB: ColliderIn
     return areRectsColliding(colliderA, colliderB)
   }
 
-  if (colliderA.colliderType === colliderTypes.circle && colliderB.colliderType === colliderTypes.rect) {
-    return areRectsColliding(colliderA, colliderB)
+  if (colliderA.colliderType === colliderTypes.rect && colliderB.colliderType === colliderTypes.circle) {
+    return areRectCircleColliding(colliderA, colliderB)
   }
 
-  if (colliderA.colliderType === colliderTypes.rect && colliderB.colliderType === colliderTypes.circle) {
-    return areRectsColliding(colliderA, colliderB)
+  if (colliderA.colliderType === colliderTypes.circle && colliderB.colliderType === colliderTypes.rect) {
+    return areRectCircleColliding(colliderB, colliderA)
   }
 
   throw new Error('Collision between ' + colliderA.colliderType + ' and ' + colliderB.colliderType + ' not supported')
 }
 
-export const areRectsColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
+const areRectsColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
   const rectA = colliderA.getBoundingBox()
   const rectB = colliderB.getBoundingBox()
 
@@ -69,18 +71,133 @@ export const areRectsColliding = (colliderA: ColliderInterface, colliderB: Colli
   return false
 }
 
-export const areCirclesColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
-  const rectA = colliderA.getBoundingBox()
-  const rectB = colliderB.getBoundingBox()
+const areCirclesColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
+  const circleABox = colliderA.getBoundingBox()
+  const circleBBox = colliderB.getBoundingBox()
 
-  const centerA = rectA.getCenter()
-  const centerB = rectB.getCenter()
-  const radiusA = rectA.w - rectB.x
-  const radiusB = rectB.w - rectB.x
+  const centerA = circleABox.getCenter()
+  const centerB = circleBBox.getCenter()
+  const radiusA = circleABox.w / 2
+  const radiusB = circleBBox.w / 2
 
   const collisionDistanceSquared = Math.pow(radiusA + radiusB, 2)
   const centerDistanceSquared = Math.pow(centerA.x - centerB.x, 2) + Math.pow(centerA.y - centerB.y, 2)
 
-
   return centerDistanceSquared < collisionDistanceSquared
+}
+
+const areRectCircleColliding = (rectCollider: ColliderInterface, circleCollider: ColliderInterface): boolean => {
+  // Broad phase - bounding box collision
+  const isBoxCollision = areRectsColliding(rectCollider, circleCollider)
+  if (!isBoxCollision) {
+    return false
+  }
+
+  // We now apply the radius to the rectangle and check if the center falls on its area
+  /**
+   *     - - *- - - - *- - ,
+   *   /     :        :  /r \
+   *  :      :        : /    :
+   *  *- - - *--------*- - - *
+   *  :      |        |      :
+   *  :      |        |      :
+   *  :   r  |   w    |   r  :
+   *  :------|--------|------:
+   *  :      |        |      :
+   *  :      |        |      :                _
+   *  :      |        |      :             -     -
+   *  :      |        |      :           /      r  \
+   *  *- - - *--------*- - - *          |   C .-----|
+   *  :      :        :  C   :           \         /
+   *   \     :        :  . <-/-----------  -  _  -        
+   *     - -  *- - - - *- -  
+   * 
+   */
+
+  // Narrow phase - sides plus radius
+  const rect = rectCollider.getBoundingBox()
+  const circleBox = circleCollider.getBoundingBox()
+  const center = circleBox.getCenter()
+  const radius = circleBox.w / 2
+
+  /**
+   *
+   *(x-r, y)(x, y)(x+w, y)(x+w+r, y)                
+   *  *- - - *--------*- - - *
+   *  :      |        |      :
+   *  :      |        |      :
+   *  :   r  |   w    |   r  :
+   *  :------|--------|------:
+   *  :      |        |      :
+   *  :      |        |      :                _
+   *  :      |        |      :             -     -
+   *  :      |        |      :           /      r  \
+   *  *- - - *--------*- - - *          |   C .-----|
+   *                                     \         /
+   *     Horizontal example                -  _  -        
+   * 
+   */
+  const horizontalBox = new Rectangle([
+    rect.x - radius,
+    rect.y,
+    rect.w + 2 * radius,
+    rect.h,
+  ])
+  if (isPointInRect(center, horizontalBox)) {
+    return true;
+  }
+
+  const verticalBox = new Rectangle([
+    rect.x,
+    rect.y - radius,
+    rect.w,
+    rect.h + 2 * radius,
+  ])
+  if (isPointInRect(center, verticalBox)) {
+    return true;
+  }
+
+  // Narrow phase - corners
+  const rectVertices: [Vector2Array, Vector2Array, Vector2Array, Vector2Array] = [
+    [rect.x, rect.y],
+    [rect.x + rect.w, rect.y],
+    [rect.x, rect.y + rect.h],
+    [rect.x + rect.w, rect.y + rect.h]
+  ]
+
+  const radiusSquared = Math.pow(radius, 2)
+  for (const vertex of rectVertices) {
+    const centerToCornerDistanceSquared = Math.pow(vertex[0] - center.x, 2) + Math.pow(vertex[1] - center.y, 2)
+    if (centerToCornerDistanceSquared < radiusSquared) {
+      return true
+    }
+  }
+
+  return false;
+}
+
+const isPointInRect = (point: Vector2, rect: Rectangle) => {
+
+  /**
+   *   *--------*
+   *   |        |
+   *   |        |
+   *   |        |
+   *   |        |
+   *   |     P  |
+   *   |     .  |
+   *   |        |
+   *   *--------*
+   */
+
+  if (
+    point.x < rect.x + rect.w &&
+    point.x > rect.x &&
+    point.y < rect.y + rect.h &&
+    point.y > rect.y
+  ) {
+    return true;
+  }
+
+  return false
 }

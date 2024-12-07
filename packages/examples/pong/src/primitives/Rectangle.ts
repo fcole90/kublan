@@ -37,8 +37,8 @@ export class Rectangle {
 
   getCenter() {
     return new Vector2([
-      (this.w - this.x / 2),
-      (this.h - this.y / 2),
+      this.x + (this.w / 2),
+      this.y + (this.h / 2),
     ])
   }
 
