@@ -22,6 +22,7 @@ export interface Node2DConfig {
   position?: Vector2Initializer
   absoluteParentPosition?: Vector2Initializer
   size?: Vector2Initializer
+  children?: Node2D[]
 }
 
 export class Node2D {
@@ -36,6 +37,11 @@ export class Node2D {
     this.size = new Vector2(config.size)
     this.absoluteParentPosition = new Vector2(config.absoluteParentPosition)
     this.id = Symbol(config.id)
+    if (config.children) {
+      for (const child of config.children) {
+        this.addChild(child)
+      }
+    }
   }
 
   addChild(childNode: Node2D) {

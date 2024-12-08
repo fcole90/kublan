@@ -1,7 +1,8 @@
 import { ExampleGame } from "@examples/common/types"
 // import { kublan } from "@kublan/engine"
 import { settings } from "./src/gameSettings"
-import { Pong } from "./src/Pong"
+import { Core } from "./src/engine/Core"
+import { MainScene } from "./src/scenes/main/MainScene"
 
 interface CreateGameCanvasOptions {
     size: { x: number, y: number }
@@ -47,7 +48,10 @@ const load: ExampleGame['load'] = async (rootElement) => {
         return
     }
 
-    const pong = new Pong(ctx)
+    const pong = new Core({
+        ctx,
+        rootScene: new MainScene()
+    })
     pong.start()
 }
 
