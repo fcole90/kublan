@@ -46,6 +46,13 @@ export class Vector2 {
     ])
   }
 
+  mul(scalar: number) {
+    return new Vector2([
+      this.x * scalar,
+      this.y * scalar,
+    ])
+  }
+
   norm() {
     const magnitude = Math.sqrt(this.x ** 2 + this.y ** 2)
     if (magnitude === 0) {

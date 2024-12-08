@@ -95,6 +95,12 @@ export class Paddle extends Node2D {
       const normDir = direction.norm()
       const translation = new Vector2([normDir.x * this.speed * eps, normDir.y * this.speed * eps])
       this.setPosition(this.getPosition().add(translation))
+      console.log({
+        eps,
+        speed: this.speed,
+        position: this.getPosition().toArray(),
+        translation: translation.toArray()
+      })
     }
   }
 }
