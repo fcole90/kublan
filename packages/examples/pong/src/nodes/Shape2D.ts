@@ -27,16 +27,16 @@ export class Shape2D extends Node2D {
     this.shapeType = config.shapeType
   }
 
-  render(renderer: Renderer) {
+  _draw(renderer: Renderer) {
     switch (this.shapeType) {
 
       case shape2Dtypes.rectangle: {
-        renderer.drawRectangle([...this.getAbsolutePosition().toArray(), ...this.getSize().toArray()], this.color)
+        renderer.drawRectangle([...this._getAbsolutePosition().toArray(), ...this.getSize().toArray()], this.color)
         break
       }
 
       case shape2Dtypes.circle: {
-        const position = this.getAbsolutePosition()
+        const position = this._getAbsolutePosition()
         const size = this.getSize()
         renderer.drawCircle([position.x + (size.x / 2), position.y + (size.y / 2)], size.x / 2, this.color)
         break

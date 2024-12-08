@@ -1,19 +1,20 @@
 import { CollisionShape2D } from "../../nodes/CollisionShape2D";
-import { Node2D, Node2DConfig } from "../../nodes/Node2D";
+import { PhysicsBody2D, PhysicsBody2DConfig } from "../../nodes/PhysicsBody2D";
 import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
 import { colliderTypes } from "../../phys/ColliderInterface";
 import { Vector2 } from "../../primitives/Vector2";
 
 
-interface PaddleNodeConfig extends Node2DConfig {
+interface PaddleNodeConfig extends PhysicsBody2DConfig {
   isUserControlled?: boolean
 }
 
-export class Paddle extends Node2D {
+export class Paddle extends PhysicsBody2D {
   private config: PaddleNodeConfig
   private pressedKeys: Set<string> = new Set([])
 
   private speed: number = 0.15
+  private direction: Vector2 = new Vector2([0, 0])
   private readonly shape: Shape2D
   private readonly collisionShape: CollisionShape2D
 
@@ -34,14 +35,14 @@ export class Paddle extends Node2D {
       size,
       shapeType: shape2Dtypes.rectangle
     })
-    this.addChildNode(this.shape)
+    this.addChild(this.shape)
     this.collisionShape = new CollisionShape2D({
       id: this.config.isUserControlled ? 'player' : 'enemy',
       colliderType: colliderTypes.rect,
       position,
       size,
     })
-    this.addChildNode(this.collisionShape)
+    this.addChild(this.collisionShape)
   }
 
   setupInputHandling() {
@@ -58,9 +59,7 @@ export class Paddle extends Node2D {
     )
   }
 
-
-
-  start() {
+  _ready() {
     if (this.config.isUserControlled) {
       this.setupInputHandling()
     }
@@ -89,14 +88,14 @@ export class Paddle extends Node2D {
     return direction.norm()
   }
 
-  update(eps: number) {
+  _physicsProcess(delta: number) {
     const direction = this.getInputVector()
     if (!direction.isNull()) {
       const normDir = direction.norm()
-      const translation = new Vector2([normDir.x * this.speed * eps, normDir.y * this.speed * eps])
+      const translation = new Vector2([normDir.x * this.speed * delta, normDir.y * this.speed * delta])
       this.setPosition(this.getPosition().add(translation))
       console.log({
-        eps,
+        eps: delta,
         speed: this.speed,
         position: this.getPosition().toArray(),
         translation: translation.toArray()

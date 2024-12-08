@@ -1,18 +1,18 @@
 import { settings } from "./gameSettings"
 import { Paddle } from "./scenes/main/Paddle"
 import { Renderer } from "./render/Renderer"
-import { Area2D } from "./nodes/Area2D"
+import { Scene2D } from "./nodes/Scene2D"
 import { Ball } from "./scenes/main/Ball"
 import { Shape2D, shape2Dtypes } from "./nodes/Shape2D"
 
 export class Pong {
   private renderer: Renderer
   private shouldStop: boolean = true
-  private root: Area2D
+  private root: Scene2D
 
   constructor(ctx: CanvasRenderingContext2D) {
     this.renderer = new Renderer(ctx, settings)
-    this.root = new Area2D()
+    this.root = new Scene2D()
   }
 
   start() {
@@ -35,23 +35,20 @@ export class Pong {
       position: [settings.viewportSize.x / 2 - 20, settings.viewportSize.x / 2 - 20]
     })
 
-    this.root.addChildNode(field)
-    field.addChildNode(mainPlayer)
-    field.addChildNode(otherPlayer)
-    field.addChildNode(ball)
+    this.root.addChild(field)
+    field.addChild(mainPlayer)
+    field.addChild(otherPlayer)
+    field.addChild(ball)
 
-    this.root.start()
+    this.root._ready()
     this.loop(window.performance.now())
   }
 
-  private update(eps: number) {
-    this.root.update(eps)
-  }
-
-  render(_eps: number) {
-    // console.debug(Date.now(), 'EPS:', eps, "FPS:", 1000 / eps)
-    this.renderer.clear()
-    this.root.render(this.renderer)
+  private loopSteps(eps: number) {
+    this.root._input([]) // TODO: input handling
+    this.root._process(eps)
+    this.root._physicsProcess(eps)
+    this.root._draw(this.renderer)
   }
 
   stop() {
@@ -62,8 +59,7 @@ export class Pong {
     if (!this.shouldStop) {
       window.requestAnimationFrame((timestamp) => {
         const eps = timestamp - lastFrameMs;
-        this.update(eps)
-        this.render(eps)
+        this.loopSteps(eps)
         this.loop(timestamp)
       })
     }

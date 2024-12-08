@@ -1,14 +1,15 @@
+import { settings } from "../../gameSettings";
 import { CollisionShape2D } from "../../nodes/CollisionShape2D";
-import { Node2D, Node2DConfig } from "../../nodes/Node2D";
+import { PhysicsBody2D, PhysicsBody2DConfig } from "../../nodes/PhysicsBody2D";
 import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
 import { colliderTypes } from "../../phys/ColliderInterface";
 import { Vector2 } from "../../primitives/Vector2";
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface BallNodeConfig extends Node2DConfig { }
+interface BallNodeConfig extends PhysicsBody2DConfig { }
 
-export class Ball extends Node2D {
+export class Ball extends PhysicsBody2D {
   private config: BallNodeConfig
 
   private speed: number = 0.15
@@ -39,30 +40,34 @@ export class Ball extends Node2D {
       size,
       shapeType: shape2Dtypes.circle
     })
-    this.addChildNode(this.shape)
+    this.addChild(this.shape)
     this.collisionShape = new CollisionShape2D({
       id: 'ball',
       colliderType: colliderTypes.circle,
       position,
       size,
     })
-    this.addChildNode(this.collisionShape)
+    this.addChild(this.collisionShape)
   }
 
-
-
-
-  start() {
+  _ready() {
 
   }
 
+  _physicsProcess(delta: number) {
+    // Handle out of screen
+    const collisionBox = this.collisionShape.getBoundingBox()
+    if (collisionBox.x < 0 || collisionBox.x + collisionBox.w > settings.viewportSize.x) {
+      this.direction = new Vector2([-this.direction.x, this.direction.y])
+    }
+    if (collisionBox.y < 0 || collisionBox.y + collisionBox.h > settings.viewportSize.y) {
+      this.direction = new Vector2([this.direction.x, -this.direction.y])
+    }
 
-
-  update(eps: number) {
-    const movement = this.direction.norm().mul(this.speed * eps)
+    const movement = this.direction.norm().mul(this.speed * delta)
     this.setPosition(this.getPosition().add(movement))
     const normDir = this.direction.norm()
-    const translation = new Vector2([normDir.x * this.speed * eps, normDir.y * this.speed * eps])
+    const translation = new Vector2([normDir.x * this.speed * delta, normDir.y * this.speed * delta])
     this.setPosition(this.getPosition().add(translation))
   }
 }

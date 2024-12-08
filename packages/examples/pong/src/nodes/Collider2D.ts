@@ -1,6 +1,6 @@
 import { ColliderType, ColliderInterface, colliderTypes } from "../phys/ColliderInterface";
 import { Rectangle } from "../primitives/Rectangle";
-import { Node2DConfig, Node2D } from "./Node2D";
+import { Node2D, Node2DConfig } from "./Node2D";
 
 
 export interface Collider2DConfig extends Node2DConfig {
@@ -12,7 +12,6 @@ export type Collider2DMap = Record<symbol, Collider2D>;
 export abstract class Collider2D extends Node2D implements ColliderInterface {
   colliderType: ColliderType = colliderTypes.rect;
   private colliders: Record<symbol, Collider2D | undefined> = {};
-
 
   setColliders(colliders: ReadonlyArray<Collider2D>) {
     this.colliders = {}
@@ -26,6 +25,6 @@ export abstract class Collider2D extends Node2D implements ColliderInterface {
   }
 
   getBoundingBox() {
-    return new Rectangle([...this.getAbsolutePosition().toArray(), ...this.getSize().toArray()])
+    return new Rectangle([...this._getAbsolutePosition().toArray(), ...this.getSize().toArray()])
   }
 }

@@ -38,8 +38,15 @@ export class Node2D {
     this.id = Symbol(config.id)
   }
 
-  addChildNode(childNode: Node2D) {
+  addChild(childNode: Node2D) {
     this.children.push(childNode)
+    childNode._enterTree()
+  }
+
+  removeChild(childNode: Node2D) {
+    const nodeIndex = this.children.findIndex((node) => node === childNode)
+    this.children.splice(nodeIndex, 1)
+    childNode._exitTree()
   }
 
   getChildren(): Readonly<Array<Node2D>> {
@@ -54,11 +61,15 @@ export class Node2D {
     this.position = new Vector2(position)
   }
 
-  setAbsoluteParentPosition(position: Vector2Initializer) {
+  translate(offset: Vector2Initializer) {
+    this.setPosition(this.position.add(new Vector2(offset)))
+  }
+
+  _setAbsoluteParentPosition(position: Vector2Initializer) {
     this.absoluteParentPosition = new Vector2(position)
   }
 
-  getAbsolutePosition(): Readonly<Vector2> {
+  _getAbsolutePosition(): Readonly<Vector2> {
     return this.absoluteParentPosition.add(this.position)
   }
 
@@ -70,9 +81,15 @@ export class Node2D {
     this.size = new Vector2(size)
   }
 
-  start() { }
+  _enterTree() { }
 
-  update(_eps: number) { }
+  _exitTree() { }
 
-  render(_renderer: Renderer) { }
+  _ready() { }
+
+  _input(_event: unknown[]) { }
+
+  _process(_delta: number) { }
+
+  _draw(_renderer: Renderer) { }
 }
