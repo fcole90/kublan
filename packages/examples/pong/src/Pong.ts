@@ -41,7 +41,7 @@ export class Pong {
     field.addChildNode(ball)
 
     this.root.start()
-    this.loop(Date.now())
+    this.loop(window.performance.now())
   }
 
   private update(eps: number) {
