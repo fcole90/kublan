@@ -18,6 +18,7 @@ export class Core {
   }
 
   start() {
+    console.log('Core start')
     this.shouldStop = false
     this.root._ready()
     this.loop(window.performance.now())

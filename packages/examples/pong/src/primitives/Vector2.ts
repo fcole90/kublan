@@ -53,8 +53,16 @@ export class Vector2 {
     ])
   }
 
+  dot(vectorOperand: Readonly<Vector2>): number {
+    return this.x * vectorOperand.x + this.y * vectorOperand.y
+  }
+
+  magnitude() {
+    return Math.sqrt(this.x ** 2 + this.y ** 2)
+  }
+
   norm() {
-    const magnitude = Math.sqrt(this.x ** 2 + this.y ** 2)
+    const magnitude = this.magnitude()
     if (magnitude === 0) {
       return new Vector2([0, 0])
     }
@@ -64,5 +72,9 @@ export class Vector2 {
 
   toArray(): Vector2Array {
     return [this.x, this.y]
+  }
+
+  static getDistance(pointA: Vector2Initializer, pointB: Vector2Initializer) {
+    return new Vector2(pointA).sub(new Vector2(pointB)).magnitude()
   }
 }

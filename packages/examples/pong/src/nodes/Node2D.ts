@@ -87,6 +87,12 @@ export class Node2D {
     this.size = new Vector2(size)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  log(...args: any[]) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    console.log(`${Date.now().toString()} [${this.id.description ?? ''}]`, ...args)
+  }
+
   _enterTree() { }
 
   _exitTree() { }

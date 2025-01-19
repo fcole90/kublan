@@ -1,28 +1,38 @@
-import { Vector2 } from "../primitives/Vector2";
+import { CollisionData2D, getCollisionData } from "../phys/collisionData";
+import { Vector2, Vector2Initializer } from "../primitives/Vector2";
 import { PhysicsBody2D, PhysicsBody2DConfig } from "./PhysicsBody2D";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface RigidBody2DConfig extends PhysicsBody2DConfig { }
+
+export interface RigidBody2DConfig extends PhysicsBody2DConfig {
+  initialVelocity?: Vector2Initializer
+}
 
 export class RigidBody2D extends PhysicsBody2D {
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(config: RigidBody2DConfig) {
     super(config)
+    this.velocity = new Vector2(config.initialVelocity)
+  }
+
+  /** Simplified from https://stackoverflow.com/a/573206 */
+  getBounceVelocity({ normal }: CollisionData2D) {
+    // Bounce decomposition
+    const perpendicularComponent = normal.mul(this.velocity.dot(normal) / normal.dot(normal))
+    const parallelComponent = this.velocity.sub(perpendicularComponent)
+
+    // Approximate frictionless full-elastic bounce
+    return parallelComponent.sub(perpendicularComponent)
+  }
+
+  handleCollisions() {
+    const collisionPairs = this.getCollisionPairs({ onlyNew: true })
+    for (const [ownCollider, outCollider] of collisionPairs) {
+      const collisionData = getCollisionData(ownCollider, outCollider)
+      this.velocity = this.getBounceVelocity(collisionData)
+    }
   }
 
   _physicsProcess(delta: number) {
-    const collidedColliders = this.getCollidedColliders()
-    const collisionCenters = collidedColliders.map((c) => c.getCenter())
-
-    const averageInitializer = { x: 0, y: 0 }
-    for (const collisionCenter of collisionCenters) {
-      averageInitializer.x += collisionCenter.x
-      averageInitializer.y += collisionCenter.y
-    }
-
-    const collisionDirection = new Vector2(averageInitializer).norm()
-    const speed = this.velocity.magnitude()
-    const updatedDirection = new Vector2([-collisionDirection.x, -collisionDirection.y]).mul(speed * delta)
-    this.setPosition(this.getPosition().add(updatedDirection))
+    this.handleCollisions()
+    this.setPosition(this.getPosition().add(this.velocity.mul(delta)))
   }
 }

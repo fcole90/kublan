@@ -10,6 +10,7 @@ export class Scene2D extends Node2D {
   }
 
   _ready(...args: Parameters<Node2D['_ready']>) {
+    console.log('Scene2D ready')
     treeApply(this, (node) => { node._ready(...args) })
   }
 
@@ -62,7 +63,7 @@ export class Scene2D extends Node2D {
     // Apply all collisions
     treeApply(this, (node) => {
       if (node instanceof Collider2D) {
-        node.setColliders(collidedCollidersMap[node.id])
+        node.setCollidedColliders(collidedCollidersMap[node.id])
       }
     })
   }

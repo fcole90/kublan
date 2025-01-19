@@ -1,20 +1,19 @@
 import { CollisionShape2D } from "../../nodes/CollisionShape2D";
-import { PhysicsBody2D, PhysicsBody2DConfig } from "../../nodes/PhysicsBody2D";
+import { KinematicBody2D, KinematicBody2DConfig } from "../../nodes/KinematicBody2D";
 import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
 import { colliderTypes } from "../../phys/ColliderInterface";
 import { Vector2 } from "../../primitives/Vector2";
 
 
-interface PaddleNodeConfig extends PhysicsBody2DConfig {
+interface PaddleNodeConfig extends KinematicBody2DConfig {
   isUserControlled?: boolean
 }
 
-export class Paddle extends PhysicsBody2D {
+export class Paddle extends KinematicBody2D {
   private config: PaddleNodeConfig
   private pressedKeys: Set<string> = new Set([])
 
   private speed: number = 0.15
-  private direction: Vector2 = new Vector2([0, 0])
   private readonly shape: Shape2D
   private readonly collisionShape: CollisionShape2D
 
@@ -25,7 +24,7 @@ export class Paddle extends PhysicsBody2D {
     })
     this.config = config
 
-    this.speed = 0.15
+    this.speed = 0.35
 
     const position = [0, 0] as const
     const size = [10, 80] as const
@@ -46,8 +45,10 @@ export class Paddle extends PhysicsBody2D {
   }
 
   setupInputHandling() {
+    console.log('setupInputHandling')
     document.addEventListener(
       'keydown', (event) => {
+        console.log('Keydown', event)
         this.pressedKeys.add(event.key)
       }
     )
@@ -67,20 +68,20 @@ export class Paddle extends PhysicsBody2D {
 
   getInputVector() {
     const direction = new Vector2([0, 0])
+    if (this.pressedKeys.has('w')) {
+      direction.y -= 1
+    }
+
+    if (this.pressedKeys.has('s')) {
+      direction.y += 1
+    }
+
     if (this.pressedKeys.has('ArrowUp')) {
       direction.y -= 1
     }
 
     if (this.pressedKeys.has('ArrowDown')) {
       direction.y += 1
-    }
-
-    if (this.pressedKeys.has('ArrowLeft')) {
-      direction.x -= 1
-    }
-
-    if (this.pressedKeys.has('ArrowRight')) {
-      direction.x += 1
     }
     if (direction.toArray().includes(NaN)) {
       throw new Error('Direction is NAN')
@@ -89,8 +90,12 @@ export class Paddle extends PhysicsBody2D {
   }
 
   _physicsProcess(delta: number) {
+    // console.log(this.pressedKeys)
     const direction = this.getInputVector()
+    // console.log('Input:', direction)
     if (!direction.isNull()) {
+      // console.log('Input:', direction)
+      console.log('Input:', direction)
       const normDir = direction.norm()
       const translation = new Vector2([normDir.x * this.speed * delta, normDir.y * this.speed * delta])
       this.setPosition(this.getPosition().add(translation))

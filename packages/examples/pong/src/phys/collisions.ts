@@ -1,8 +1,8 @@
 import { Rectangle } from "../primitives/Rectangle";
 import { Vector2, Vector2Array } from "../primitives/Vector2";
-import { ColliderInterface, colliderTypes } from "./ColliderInterface";
+import { Collider2DInterface, colliderTypes } from "./ColliderInterface";
 
-export const detectCollisions = (colliders: ColliderInterface[]): Record<symbol, Record<symbol, boolean>> => {
+export const detectCollisions = (colliders: Collider2DInterface[]): Record<symbol, Record<symbol, boolean>> => {
   const collisionsMap: Record<symbol, Record<symbol, boolean | undefined> | undefined> = {}
 
   for (const colliderA of colliders) {
@@ -29,7 +29,7 @@ export const detectCollisions = (colliders: ColliderInterface[]): Record<symbol,
   return collisionsMap as Record<symbol, Record<symbol, boolean>>
 }
 
-export const areColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
+export const areColliding = (colliderA: Collider2DInterface, colliderB: Collider2DInterface): boolean => {
   if (colliderA.id === colliderB.id) {
     // A collider cannot collide with itself
     return false
@@ -55,7 +55,7 @@ export const areColliding = (colliderA: ColliderInterface, colliderB: ColliderIn
   throw new Error('Collision between ' + colliderA.colliderType + ' and ' + colliderB.colliderType + ' not supported')
 }
 
-const areRectsColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
+const areRectsColliding = (colliderA: Collider2DInterface, colliderB: Collider2DInterface): boolean => {
   const rectA = colliderA.getBoundingBox()
   const rectB = colliderB.getBoundingBox()
 
@@ -71,7 +71,7 @@ const areRectsColliding = (colliderA: ColliderInterface, colliderB: ColliderInte
   return false
 }
 
-const areCirclesColliding = (colliderA: ColliderInterface, colliderB: ColliderInterface): boolean => {
+const areCirclesColliding = (colliderA: Collider2DInterface, colliderB: Collider2DInterface): boolean => {
   const circleABox = colliderA.getBoundingBox()
   const circleBBox = colliderB.getBoundingBox()
 
@@ -86,7 +86,7 @@ const areCirclesColliding = (colliderA: ColliderInterface, colliderB: ColliderIn
   return centerDistanceSquared < collisionDistanceSquared
 }
 
-const areRectCircleColliding = (rectCollider: ColliderInterface, circleCollider: ColliderInterface): boolean => {
+const areRectCircleColliding = (rectCollider: Collider2DInterface, circleCollider: Collider2DInterface): boolean => {
   // Broad phase - bounding box collision
   const isBoxCollision = areRectsColliding(rectCollider, circleCollider)
   if (!isBoxCollision) {
@@ -201,3 +201,4 @@ const isPointInRect = (point: Vector2, rect: Rectangle) => {
 
   return false
 }
+

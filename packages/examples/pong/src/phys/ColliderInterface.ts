@@ -8,7 +8,7 @@ export const colliderTypes = {
 
 export type ColliderType = keyof typeof colliderTypes
 
-export interface ColliderInterface {
+export interface Collider2DInterface {
   id: symbol
   colliderType: ColliderType
   getSize: () => Vector2
