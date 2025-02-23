@@ -8,12 +8,37 @@ export interface CollisionData2D {
 }
 
 export const getCollisionData = (from: Collider2D, to: Collider2D): CollisionData2D => {
+  if (from.colliderType === colliderTypes.circle && to.colliderType === colliderTypes.circle) {
+    return getCircleToCircleCollisionData(from, to)
+  }
+
   if (from.colliderType === colliderTypes.circle && to.colliderType === colliderTypes.rect) {
     return getCircleToRectCollisionData(from, to)
   }
 
   throw new Error(`Cannot handle collision data from ${from.colliderType} to ${to.colliderType}.`)
 
+}
+
+const getCircleToCircleCollisionData = (circleColliderA: Collider2DInterface, circleColliderB: Collider2DInterface): CollisionData2D => {
+  const circleBoxA = circleColliderA.getBoundingBox()
+  const circleCenterA = circleBoxA.getCenter()
+  const circleRadiusA = circleBoxA.w / 2
+
+  const circleBoxB = circleColliderB.getBoundingBox()
+  const circleCenterB = circleBoxB.getCenter()
+
+  const collisionSurfaceNormal = new Vector2([
+    circleCenterB.x - circleCenterA.x,
+    circleCenterB.y - circleCenterA.y,
+  ]).norm()
+
+  const depthDirection = collisionSurfaceNormal.mul(circleRadiusA)
+
+  return {
+    depthDirection,
+    normal: collisionSurfaceNormal
+  }
 }
 
 const getCircleToRectCollisionData = (circleCollider: Collider2DInterface, rectCollider: Collider2DInterface,): CollisionData2D => {
@@ -32,5 +57,4 @@ const getCircleToRectCollisionData = (circleCollider: Collider2DInterface, rectC
     depthDirection,
     normal: collisionSurfaceNormal
   }
-
 }

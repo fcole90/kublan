@@ -20,13 +20,21 @@ export class MainScene extends Scene2D {
       position: [settings.viewportSize.x - 10, settings.viewportSize.y / 2 - 40]
     })
     const ball = new Ball({
-      position: [settings.viewportSize.x / 2 - 20, settings.viewportSize.x / 2 - 20]
+      position: [settings.viewportSize.x / 2 - 20, settings.viewportSize.y / 2 - 20]
     })
-
 
     field.addChild(mainPlayer)
     field.addChild(otherPlayer)
     field.addChild(ball)
+
+    const maxBalls = 100
+    for (let i = 0; i < maxBalls; i++) {
+      const gap = settings.viewportSize.y / maxBalls
+      field.addChild(new Ball({
+        position: [settings.viewportSize.x / 2, settings.viewportSize.y / 2 - (maxBalls / 2 * gap) + (gap * i)]
+      }))
+    }
+
     this.addChild(field)
     super._ready()
   }

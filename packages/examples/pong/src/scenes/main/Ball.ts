@@ -14,7 +14,8 @@ export class Ball extends RigidBody2D {
   private readonly collisionShape: CollisionShape2D
 
   constructor(config: BallNodeConfig) {
-    const speed: number = 0.4
+    const speed: number = 0.10
+    const size: number = 20
     const radiantDirectionAngle = Math.random() * 2 * Math.PI
     const directionInitializer = [
       Math.cos(radiantDirectionAngle),
@@ -28,17 +29,15 @@ export class Ball extends RigidBody2D {
       initialVelocity: direction.mul(speed)
     })
 
-    const size = [20, 20] as const
-
     this.shape = new Shape2D({
-      size,
+      size: [size, size],
       shapeType: shape2Dtypes.circle
     })
     this.addChild(this.shape)
     this.collisionShape = new CollisionShape2D({
       id: 'ball',
       colliderType: colliderTypes.circle,
-      size,
+      size: [size, size],
     })
     this.addChild(this.collisionShape)
   }
@@ -47,7 +46,7 @@ export class Ball extends RigidBody2D {
 
   }
 
-  _physicsProcess(delta: number) {
+  _process(delta: number) {
     // Handle out of screen
     const collisionBox = this.collisionShape.getBoundingBox()
     if (
@@ -63,6 +62,6 @@ export class Ball extends RigidBody2D {
     }
 
     // Continue normal phys
-    super._physicsProcess(delta)
+    super._process(delta)
   }
 }
