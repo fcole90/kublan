@@ -1,4 +1,4 @@
-import { Vector2Initializer } from "../primitives/Vector2";
+import { Vector2Initializer } from "@kublan/engine/src/primitives/Vector2";
 import { Renderer } from "../render/Renderer";
 import { checkExhaustiveCondition } from "../utils/typing/checkExhaustiveConditon";
 import { Node2D, Node2DConfig } from "./Node2D";

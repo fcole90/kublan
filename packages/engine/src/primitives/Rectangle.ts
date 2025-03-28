@@ -47,7 +47,6 @@ export class Rectangle {
   }
 
   getClosestPointOnPerimeter = (point: Vector2): Vector2 => {
-    console.log(`getClosestPointOnPerimeter initial point`, point)
     // Get the coordinates confined to the points of the rectangle (internal + perimeter)
     const internalX = Math.max(this.x, Math.min(point.x, this.x + this.w));
     const internalY = Math.max(this.y, Math.min(point.y, this.y + this.h));

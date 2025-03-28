@@ -12,7 +12,8 @@
     "packages/examples/*"
   ],
   "scripts": {
-    "dev": "yarn workspace @examples/main dev"
+    "dev": "yarn workspace @examples/main dev",
+    "build": "yarn workspace @kublan/engine build"
   },
   "devDependencies": {
     "typescript": "^5.6.3"

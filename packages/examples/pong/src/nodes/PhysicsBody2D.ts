@@ -1,4 +1,4 @@
-import { Vector2, Vector2Initializer } from "../primitives/Vector2";
+import { Vector2, Vector2Initializer } from "@kublan/engine/src/primitives/Vector2";
 import { Collider2D } from "./Collider2D";
 import { Node2D, Node2DConfig, treeToArray } from "./Node2D";
 

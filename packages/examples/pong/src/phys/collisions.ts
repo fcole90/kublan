@@ -1,5 +1,5 @@
-import { Rectangle } from "../primitives/Rectangle";
-import { Vector2, Vector2Array } from "../primitives/Vector2";
+import { Rectangle } from "@kublan/engine/src/primitives/Rectangle";
+import { Vector2, Vector2Array } from "@kublan/engine/src/primitives/Vector2";
 import { Collider2DInterface, colliderTypes } from "./ColliderInterface";
 
 export const detectCollisions = (colliders: Collider2DInterface[]): Record<symbol, Record<symbol, boolean>> => {

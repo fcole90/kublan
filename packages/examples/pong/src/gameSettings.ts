@@ -1,4 +1,4 @@
-import { Vector2 } from "./primitives/Vector2";
+import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
 
 
 export const settings = {

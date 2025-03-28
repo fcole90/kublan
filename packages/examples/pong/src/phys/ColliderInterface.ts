@@ -1,5 +1,5 @@
-import { Rectangle } from "../primitives/Rectangle"
-import { Vector2 } from "../primitives/Vector2"
+import { Rectangle } from "@kublan/engine/src/primitives/Rectangle"
+import { Vector2 } from "@kublan/engine/src/primitives/Vector2"
 
 export const colliderTypes = {
   rect: 'rect',

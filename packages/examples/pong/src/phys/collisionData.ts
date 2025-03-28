@@ -1,5 +1,5 @@
 import { Collider2D } from "../nodes/Collider2D"
-import { Vector2 } from "../primitives/Vector2"
+import { Vector2 } from "@kublan/engine/src/primitives/Vector2"
 import { Collider2DInterface, colliderTypes } from "./ColliderInterface"
 
 export interface CollisionData2D {

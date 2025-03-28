@@ -1,6 +1,6 @@
 import { ColliderType, Collider2DInterface, colliderTypes } from "../phys/ColliderInterface";
-import { Rectangle } from "../primitives/Rectangle";
-import { Vector2 } from "../primitives/Vector2";
+import { Rectangle } from "@kublan/engine/src/primitives/Rectangle";
+import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
 import { Node2D, Node2DConfig } from "./Node2D";
 
 

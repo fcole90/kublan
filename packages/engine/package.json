@@ -7,14 +7,10 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc",
-    "tsc": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },
   "devDependencies": {
     "typescript": "^5.6.3"
-  },
-  "exports": {
-    ".": "./dist/index.js",
-    "./*": "./dist/*"
   }
 }

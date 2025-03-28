@@ -1,5 +1,5 @@
 import { CollisionData2D, getCollisionData } from "../phys/collisionData";
-import { Vector2, Vector2Initializer } from "../primitives/Vector2";
+import { Vector2, Vector2Initializer } from "@kublan/engine/src/primitives/Vector2";
 import { PhysicsBody2D, PhysicsBody2DConfig } from "./PhysicsBody2D";
 
 

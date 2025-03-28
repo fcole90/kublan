@@ -2,7 +2,7 @@ import { CollisionShape2D } from "../../nodes/CollisionShape2D";
 import { KinematicBody2D, KinematicBody2DConfig } from "../../nodes/KinematicBody2D";
 import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
 import { colliderTypes } from "../../phys/ColliderInterface";
-import { Vector2 } from "../../primitives/Vector2";
+import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
 
 
 interface PaddleNodeConfig extends KinematicBody2DConfig {

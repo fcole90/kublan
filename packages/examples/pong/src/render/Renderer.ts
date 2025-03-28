@@ -1,6 +1,6 @@
 import type { GameSettings } from "../gameSettings";
-import { Rectangle, RectangleInitializer } from "../primitives/Rectangle"
-import { Vector2, Vector2Initializer } from "../primitives/Vector2";
+import { Rectangle, RectangleInitializer } from "@kublan/engine/src/primitives/Rectangle"
+import { Vector2, Vector2Initializer } from "@kublan/engine/src/primitives/Vector2";
 
 export class Renderer {
   readonly ctx: CanvasRenderingContext2D
