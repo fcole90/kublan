@@ -1,8 +1,6 @@
 {
-  "name": "@kublan/common",
+  "name": "@kublan/config",
   "version": "0.0.1",
-  "author": "Fabio Colella <fcole90@gmail.com>",
-  "license": "Apache-2.0",
   "devDependencies": {
     "@eslint/js": "9.1.0",
     "@types/eslint__js": "^8.42.3",

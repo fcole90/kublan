@@ -27,8 +27,9 @@ const getGameSelector = (rootElement: HTMLElement): HTMLElement => {
 }
 
 
+// eslint-disable-next-line @typescript-eslint/require-await
 const load = async (rootElement: HTMLElement) => {
-    rootElement?.replaceChildren(getGameSelector(rootElement))
+    rootElement.replaceChildren(getGameSelector(rootElement))
 }
 
 export const examples: ExampleGame = {

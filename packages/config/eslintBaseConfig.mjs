@@ -9,6 +9,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   {
+
     rules: {
       // Note: you must disable the base rule as it can report incorrect errors
       "no-unused-vars": "off",
@@ -31,5 +32,6 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    ignores: ['node_modules', 'dist'],
   },
 );

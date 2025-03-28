@@ -6,8 +6,8 @@
   "author": "Fabio Colella <fcole90@gmail.com>",
   "license": "Apache-2.0",
   "private": "true",
-  "workspaces":[
-    "packages/common",
+  "workspaces": [
+    "packages/config",
     "packages/engine",
     "packages/examples/*"
   ],
