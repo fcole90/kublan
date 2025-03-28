@@ -1,5 +1,5 @@
 import { Vector2, Vector2Initializer } from "@kublan/engine/src/primitives/Vector2";
-import { Renderer } from "../render/Renderer";
+import { Renderer } from "@kublan/engine/src/render/Renderer";
 
 export const treeApply = (node: Node2D, callBack: (node: Node2D) => void) => {
   for (const childNode of node.getChildren()) {

@@ -1,5 +1,5 @@
 import { settings } from "../gameSettings"
-import { Renderer } from "../render/Renderer"
+import { Renderer } from "@kublan/engine/src/render/Renderer"
 import { Scene2D } from "../nodes/Scene2D"
 
 export interface CoreConfig {

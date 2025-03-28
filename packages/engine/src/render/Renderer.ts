@@ -1,4 +1,4 @@
-import type { GameSettings } from "../gameSettings";
+import type { GameSettings } from "../config/settings";
 import { Rectangle, RectangleInitializer } from "@kublan/engine/src/primitives/Rectangle"
 import { Vector2, Vector2Initializer } from "@kublan/engine/src/primitives/Vector2";
 
