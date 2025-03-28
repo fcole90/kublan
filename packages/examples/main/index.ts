@@ -1,8 +1,10 @@
 import { game as pong } from "@examples/pong";
+import { game as physSandbox } from "@examples/phys-sandbox";
 import { ExampleGame } from "@examples/common/types";
 
 const games = {
     pong,
+    physSandbox
 } satisfies Record<string, ExampleGame>
 
 
