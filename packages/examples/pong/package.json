@@ -10,6 +10,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
+    "lint:fix": "yarn lint --fix",
     "tsc": "tsc --noEmit"
   },
   "peerDependencies": {

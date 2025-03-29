@@ -13,9 +13,12 @@
   ],
   "scripts": {
     "dev": "yarn workspace @examples/main dev",
-    "build": "yarn workspace @kublan/engine build"
+    "build": "yarn workspace @kublan/engine build",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix"
   },
   "devDependencies": {
+    "turbo": "^2.4.2",
     "typescript": "^5.6.3"
   }
 }
