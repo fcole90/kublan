@@ -1,11 +1,11 @@
 {
-    "name": "@examples/common",
-    "version": "0.0.1",
-    "author": "Fabio Colella <fcole90@gmail.com>",
-    "license": "Apache-2.0",
-    "devDependencies": {
-      "typescript": "^5.6",
-      "vite": "^5.4.11"
-    }
+  "name": "@examples/common",
+  "version": "0.0.1",
+  "author": "Fabio Colella <fcole90@gmail.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "prettier": "^3.5.2",
+    "typescript": "^5.6",
+    "vite": "^5.4.11"
   }
-  
+}
