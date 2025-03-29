@@ -1,11 +1,11 @@
-import { CollisionShape2D } from "../../nodes/CollisionShape2D";
+import { CollisionShape2D } from '../../nodes/CollisionShape2D';
 import {
   KinematicBody2D,
   KinematicBody2DConfig,
-} from "../../nodes/KinematicBody2D";
-import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
-import { colliderTypes } from "../../phys/collisions/colliders";
-import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
+} from '../../nodes/KinematicBody2D';
+import { Shape2D, shape2Dtypes } from '../../nodes/Shape2D';
+import { colliderTypes } from '../../phys/collisions/colliders';
+import { Vector2 } from '@kublan/engine/src/primitives/Vector2';
 
 interface PaddleNodeConfig extends KinematicBody2DConfig {
   isUserControlled?: boolean;
@@ -37,7 +37,7 @@ export class Paddle extends KinematicBody2D {
     });
     this.addChild(this.shape);
     this.collisionShape = new CollisionShape2D({
-      id: this.config.isUserControlled ? "player" : "enemy",
+      id: this.config.isUserControlled ? 'player' : 'enemy',
       colliderType: colliderTypes.rect,
       position,
       size,
@@ -46,13 +46,13 @@ export class Paddle extends KinematicBody2D {
   }
 
   setupInputHandling() {
-    console.log("setupInputHandling");
-    document.addEventListener("keydown", (event) => {
-      console.log("Keydown", event);
+    console.log('setupInputHandling');
+    document.addEventListener('keydown', (event) => {
+      console.log('Keydown', event);
       this.pressedKeys.add(event.key);
     });
 
-    document.addEventListener("keyup", (event) => {
+    document.addEventListener('keyup', (event) => {
       this.pressedKeys.delete(event.key);
     });
   }
@@ -65,23 +65,23 @@ export class Paddle extends KinematicBody2D {
 
   getInputVector() {
     const direction = new Vector2([0, 0]);
-    if (this.pressedKeys.has("w")) {
+    if (this.pressedKeys.has('w')) {
       direction.y -= 1;
     }
 
-    if (this.pressedKeys.has("s")) {
+    if (this.pressedKeys.has('s')) {
       direction.y += 1;
     }
 
-    if (this.pressedKeys.has("ArrowUp")) {
+    if (this.pressedKeys.has('ArrowUp')) {
       direction.y -= 1;
     }
 
-    if (this.pressedKeys.has("ArrowDown")) {
+    if (this.pressedKeys.has('ArrowDown')) {
       direction.y += 1;
     }
     if (direction.toArray().includes(NaN)) {
-      throw new Error("Direction is NAN");
+      throw new Error('Direction is NAN');
     }
     return direction.norm();
   }
@@ -92,7 +92,7 @@ export class Paddle extends KinematicBody2D {
     // console.log('Input:', direction)
     if (!direction.isNull()) {
       // console.log('Input:', direction)
-      console.log("Input:", direction);
+      console.log('Input:', direction);
       const normDir = direction.norm();
       const translation = new Vector2([
         normDir.x * this.speed * delta,

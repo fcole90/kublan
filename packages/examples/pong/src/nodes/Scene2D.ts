@@ -1,27 +1,27 @@
-import { detectCollisions } from "../phys/collisions/collisionDetection";
-import { Collider2D } from "./Collider2D";
-import { Node2D, treeApply, treeToArray } from "./Node2D";
-import { PhysicsBody2D } from "./PhysicsBody2D";
+import { detectCollisions } from '../phys/collisions/collisionDetection';
+import { Collider2D } from './Collider2D';
+import { Node2D, treeApply, treeToArray } from './Node2D';
+import { PhysicsBody2D } from './PhysicsBody2D';
 
 export class Scene2D extends Node2D {
   constructor() {
     super({});
   }
 
-  _ready(...args: Parameters<Node2D["_ready"]>) {
-    console.log("Scene2D ready");
+  _ready(...args: Parameters<Node2D['_ready']>) {
+    console.log('Scene2D ready');
     treeApply(this, (node) => {
       node._ready(...args);
     });
   }
 
-  _input(...args: Parameters<Node2D["_input"]>) {
+  _input(...args: Parameters<Node2D['_input']>) {
     treeApply(this, (node) => {
       node._input(...args);
     });
   }
 
-  _process(...args: Parameters<Node2D["_process"]>) {
+  _process(...args: Parameters<Node2D['_process']>) {
     treeApply(this, (node) => {
       // Apply update
       node._process(...args);
@@ -33,7 +33,7 @@ export class Scene2D extends Node2D {
     });
   }
 
-  _physicsProcess(...args: Parameters<PhysicsBody2D["_physicsProcess"]>) {
+  _physicsProcess(...args: Parameters<PhysicsBody2D['_physicsProcess']>) {
     const colliders = treeToArray(this).filter((n) => n instanceof Collider2D);
 
     const collisionsMap = detectCollisions(colliders);
@@ -71,7 +71,7 @@ export class Scene2D extends Node2D {
     });
   }
 
-  _draw(...args: Parameters<Node2D["_draw"]>) {
+  _draw(...args: Parameters<Node2D['_draw']>) {
     treeApply(this, (node) => {
       node._draw(...args);
     });

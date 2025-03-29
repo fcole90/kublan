@@ -1,9 +1,9 @@
-import { settings } from "../../gameSettings";
-import { CollisionShape2D } from "../../nodes/CollisionShape2D";
-import { RigidBody2D, RigidBody2DConfig } from "../../nodes/RigidBody2D";
-import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
-import { colliderTypes } from "../../phys/collisions/colliders";
-import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
+import { settings } from '../../gameSettings';
+import { CollisionShape2D } from '../../nodes/CollisionShape2D';
+import { RigidBody2D, RigidBody2DConfig } from '../../nodes/RigidBody2D';
+import { Shape2D, shape2Dtypes } from '../../nodes/Shape2D';
+import { colliderTypes } from '../../phys/collisions/colliders';
+import { Vector2 } from '@kublan/engine/src/primitives/Vector2';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface BallNodeConfig extends RigidBody2DConfig {}
@@ -34,7 +34,7 @@ export class Ball extends RigidBody2D {
     });
     this.addChild(this.shape);
     this.collisionShape = new CollisionShape2D({
-      id: "ball",
+      id: 'ball',
       colliderType: colliderTypes.circle,
       size: [size, size],
     });

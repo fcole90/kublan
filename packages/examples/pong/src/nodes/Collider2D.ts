@@ -2,10 +2,10 @@ import {
   ColliderType,
   Collider2DInterface,
   colliderTypes,
-} from "../phys/collisions/colliders";
-import { Rectangle } from "@kublan/engine/src/primitives/Rectangle";
-import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
-import { Node2D, Node2DConfig } from "./Node2D";
+} from '../phys/collisions/colliders';
+import { Rectangle } from '@kublan/engine/src/primitives/Rectangle';
+import { Vector2 } from '@kublan/engine/src/primitives/Vector2';
+import { Node2D, Node2DConfig } from './Node2D';
 
 export interface Collider2DConfig extends Node2DConfig {
   colliderType: ColliderType;
@@ -20,7 +20,7 @@ export abstract class Collider2D extends Node2D implements Collider2DInterface {
 
   setCollidedColliders(colliders: ReadonlyArray<Collider2D>) {
     this.prevCollidedCollidersId = new Set(
-      this.collidedColliders.map((c) => c.id)
+      this.collidedColliders.map((c) => c.id),
     );
     this.collidedColliders = colliders;
   }
@@ -35,7 +35,7 @@ export abstract class Collider2D extends Node2D implements Collider2DInterface {
 
           return [...newCollidersList, collider];
         },
-        []
+        [],
       );
     }
 
@@ -44,7 +44,7 @@ export abstract class Collider2D extends Node2D implements Collider2DInterface {
 
   getCollisionPairs(options?: { onlyNew?: true }) {
     return this.getCollidedColliders(options).map(
-      (c) => [this, c] as [Collider2D, Collider2D]
+      (c) => [this, c] as [Collider2D, Collider2D],
     );
   }
 

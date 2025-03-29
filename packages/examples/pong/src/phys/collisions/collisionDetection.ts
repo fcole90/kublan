@@ -1,9 +1,9 @@
-import { Rectangle } from "../../primitives/Rectangle";
-import { Vector2, Vector2Array } from "../../primitives/Vector2";
-import { Collider2DInterface, colliderTypes } from "./colliders";
+import { Rectangle } from '@kublan/engine/src/primitives/Rectangle';
+import { Vector2, Vector2Array } from '@kublan/engine/src/primitives/Vector2';
+import { Collider2DInterface, colliderTypes } from './colliders';
 
 export const detectCollisions = (
-  colliders: Collider2DInterface[]
+  colliders: Collider2DInterface[],
 ): Record<symbol, Record<symbol, boolean>> => {
   const collisionsMap: Record<
     symbol,
@@ -22,11 +22,12 @@ export const detectCollisions = (
         collisionsMap[colliderA.id]?.[colliderB.id] ??
         areColliding(colliderA, colliderB);
       if (isCollision) {
-        console.log("Detected collision:", {
-          [colliderA.id.description ?? "unknownA"]: colliderA
+        console.log('Detected collision:', {
+          [colliderA.id.description ?? 'unknownA']: colliderA
             .getBoundingBox()
             .toArray(),
-          [colliderB.id.description ?? "unknownB"]: colliderB
+
+          [colliderB.id.description ?? 'unknownB']: colliderB
             .getBoundingBox()
             .toArray(),
         });
@@ -48,7 +49,7 @@ export const detectCollisions = (
 
 export const areColliding = (
   colliderA: Collider2DInterface,
-  colliderB: Collider2DInterface
+  colliderB: Collider2DInterface,
 ): boolean => {
   if (colliderA.id === colliderB.id) {
     // A collider cannot collide with itself
@@ -84,17 +85,17 @@ export const areColliding = (
   }
 
   throw new Error(
-    "Collision between " +
+    'Collision between ' +
       colliderA.colliderType +
-      " and " +
+      ' and ' +
       colliderB.colliderType +
-      " not supported"
+      ' not supported',
   );
 };
 
 const areRectsColliding = (
   colliderA: Collider2DInterface,
-  colliderB: Collider2DInterface
+  colliderB: Collider2DInterface,
 ): boolean => {
   const rectA = colliderA.getBoundingBox();
   const rectB = colliderB.getBoundingBox();
@@ -113,7 +114,7 @@ const areRectsColliding = (
 
 const areCirclesColliding = (
   colliderA: Collider2DInterface,
-  colliderB: Collider2DInterface
+  colliderB: Collider2DInterface,
 ): boolean => {
   const circleABox = colliderA.getBoundingBox();
   const circleBBox = colliderB.getBoundingBox();
@@ -132,7 +133,7 @@ const areCirclesColliding = (
 
 const areRectCircleColliding = (
   rectCollider: Collider2DInterface,
-  circleCollider: Collider2DInterface
+  circleCollider: Collider2DInterface,
 ): boolean => {
   // Broad phase - bounding box collision
   const isBoxCollision = areRectsColliding(rectCollider, circleCollider);

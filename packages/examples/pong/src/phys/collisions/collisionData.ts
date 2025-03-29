@@ -1,6 +1,6 @@
-import { Collider2D as ColliderNode2D } from "../../nodes/Collider2D";
-import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
-import { CircleCollider2D, colliderTypes, RectCollider2D } from "./colliders";
+import { Collider2D as ColliderNode2D } from '../../nodes/Collider2D';
+import { Vector2 } from '@kublan/engine/src/primitives/Vector2';
+import { CircleCollider2D, colliderTypes, RectCollider2D } from './colliders';
 
 export interface CollisionData2D {
   depthDirection: Vector2;
@@ -9,7 +9,7 @@ export interface CollisionData2D {
 
 export const getCollisionData = (
   from: ColliderNode2D,
-  to: ColliderNode2D
+  to: ColliderNode2D,
 ): CollisionData2D => {
   if (
     from.colliderType === colliderTypes.circle &&
@@ -17,7 +17,7 @@ export const getCollisionData = (
   ) {
     return getCircleToCircleCollisionData(
       from as CircleCollider2D,
-      to as CircleCollider2D
+      to as CircleCollider2D,
     );
   }
 
@@ -27,18 +27,18 @@ export const getCollisionData = (
   ) {
     return getCircleToRectCollisionData(
       from as CircleCollider2D,
-      to as RectCollider2D
+      to as RectCollider2D,
     );
   }
 
   throw new Error(
-    `Cannot handle collision data from ${from.colliderType} to ${to.colliderType}.`
+    `Cannot handle collision data from ${from.colliderType} to ${to.colliderType}.`,
   );
 };
 
 const getCircleToCircleCollisionData = (
   circleColliderA: CircleCollider2D,
-  circleColliderB: CircleCollider2D
+  circleColliderB: CircleCollider2D,
 ): CollisionData2D => {
   const circleBoxA = circleColliderA.getBoundingBox();
   const circleCenterA = circleBoxA.getCenter();
@@ -62,7 +62,7 @@ const getCircleToCircleCollisionData = (
 
 const getCircleToRectCollisionData = (
   circleCollider: CircleCollider2D,
-  rectCollider: RectCollider2D
+  rectCollider: RectCollider2D,
 ): CollisionData2D => {
   const rectangle = rectCollider.getBoundingBox();
   const circleBox = circleCollider.getBoundingBox();
@@ -74,7 +74,7 @@ const getCircleToRectCollisionData = (
   // The position of the innermost point of the circle inside the rectangle
   const innerPoint = circleCenter.add(collisionSurfaceNormal.mul(circleRadius));
   const depthDirection = collisionSurfaceNormal.mul(
-    Vector2.getDistance(innerPoint, surfacePoint)
+    Vector2.getDistance(innerPoint, surfacePoint),
   );
 
   return {
