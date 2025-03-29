@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "strict": true,
+    "noImplicitOverride": "true",
+    "noUncheckedIndexedAccess": "true",
     "declaration": true,
     "target": "ESNext",
     "checkJs": true,
