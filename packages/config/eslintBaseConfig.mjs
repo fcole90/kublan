@@ -14,6 +14,8 @@ export default tseslint.config(
 
     rules: {
       // Note: you must disable the base rule as it can report incorrect errors
+      curly: ['error', 'all'],
+      "no-useless-rename": "error",
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
