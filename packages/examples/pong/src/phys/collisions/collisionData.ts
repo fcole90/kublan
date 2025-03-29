@@ -1,6 +1,6 @@
-import { Collider2D } from "../../nodes/Collider2D";
+import { Collider2D as ColliderNode2D } from "../../nodes/Collider2D";
 import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
-import { Collider2DInterface, colliderTypes } from "./colliders";
+import { CircleCollider2D, colliderTypes, RectCollider2D } from "./colliders";
 
 export interface CollisionData2D {
   depthDirection: Vector2;
@@ -8,21 +8,27 @@ export interface CollisionData2D {
 }
 
 export const getCollisionData = (
-  from: Collider2D,
-  to: Collider2D
+  from: ColliderNode2D,
+  to: ColliderNode2D
 ): CollisionData2D => {
   if (
     from.colliderType === colliderTypes.circle &&
     to.colliderType === colliderTypes.circle
   ) {
-    return getCircleToCircleCollisionData(from, to);
+    return getCircleToCircleCollisionData(
+      from as CircleCollider2D,
+      to as CircleCollider2D
+    );
   }
 
   if (
     from.colliderType === colliderTypes.circle &&
     to.colliderType === colliderTypes.rect
   ) {
-    return getCircleToRectCollisionData(from, to);
+    return getCircleToRectCollisionData(
+      from as CircleCollider2D,
+      to as RectCollider2D
+    );
   }
 
   throw new Error(
@@ -31,8 +37,8 @@ export const getCollisionData = (
 };
 
 const getCircleToCircleCollisionData = (
-  circleColliderA: Collider2DInterface,
-  circleColliderB: Collider2DInterface
+  circleColliderA: CircleCollider2D,
+  circleColliderB: CircleCollider2D
 ): CollisionData2D => {
   const circleBoxA = circleColliderA.getBoundingBox();
   const circleCenterA = circleBoxA.getCenter();
@@ -55,8 +61,8 @@ const getCircleToCircleCollisionData = (
 };
 
 const getCircleToRectCollisionData = (
-  circleCollider: Collider2DInterface,
-  rectCollider: Collider2DInterface
+  circleCollider: CircleCollider2D,
+  rectCollider: RectCollider2D
 ): CollisionData2D => {
   const rectangle = rectCollider.getBoundingBox();
   const circleBox = circleCollider.getBoundingBox();
