@@ -1,5 +1,6 @@
 import { ExampleGame } from "@examples/common/types"
 import { Core } from "./src/engine/Core"
+import { settings } from "./src/config/settings"
 
 interface CreateGameCanvasOptions {
     size: { x: number, y: number }
@@ -28,7 +29,6 @@ const createGameCanvas = ({ size }: CreateGameCanvasOptions): HTMLCanvasElement 
          background-color: black;
         `)
 
-
     return canvas
 }
 
@@ -47,6 +47,7 @@ const load: ExampleGame['load'] = async (rootElement) => {
 
     const physSandbox = new Core({
         ctx,
+        settings
         // rootScene: new MainScene()
     })
     physSandbox.start()

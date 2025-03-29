@@ -1,16 +1,20 @@
+import { Renderer } from "@kublan/engine/src/render/Renderer"
+import { Settings } from "@kublan/engine/src/config/settings"
+
 export interface CoreConfig {
   ctx: CanvasRenderingContext2D,
+  settings: Settings,
   // rootScene: Scene2D,
 }
 
 export class Core {
-  // private renderer: Renderer
+  private renderer: Renderer
   private shouldStop: boolean = true
   private ctx: CanvasRenderingContext2D
   // private root: Scene2D
 
   constructor(config: CoreConfig) {
-    // this.renderer = new Renderer(config.ctx, settings)
+    this.renderer = new Renderer(config.ctx, config.settings)
     // this.root = config.rootScene
     this.ctx = config.ctx
   }

@@ -1,12 +1,12 @@
-import type { GameSettings } from "../config/settings";
+import type { Settings } from "../config/settings";
 import { Rectangle, RectangleInitializer } from "@kublan/engine/src/primitives/Rectangle"
 import { Vector2, Vector2Initializer } from "@kublan/engine/src/primitives/Vector2";
 
 export class Renderer {
   readonly ctx: CanvasRenderingContext2D
-  readonly settings: GameSettings
+  readonly settings: Settings
 
-  constructor(ctx: CanvasRenderingContext2D, settings: GameSettings) {
+  constructor(ctx: CanvasRenderingContext2D, settings: Settings) {
     this.ctx = ctx
     this.settings = settings
   }
