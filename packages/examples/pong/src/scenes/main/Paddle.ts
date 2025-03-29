@@ -4,7 +4,7 @@ import {
   KinematicBody2DConfig,
 } from "../../nodes/KinematicBody2D";
 import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
-import { colliderTypes } from "../../phys/collisions/colliders/ColliderInterface";
+import { colliderTypes } from "../../phys/collisions/colliders";
 import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
 
 interface PaddleNodeConfig extends KinematicBody2DConfig {

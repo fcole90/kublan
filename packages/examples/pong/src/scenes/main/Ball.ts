@@ -2,7 +2,7 @@ import { settings } from "../../gameSettings";
 import { CollisionShape2D } from "../../nodes/CollisionShape2D";
 import { RigidBody2D, RigidBody2DConfig } from "../../nodes/RigidBody2D";
 import { Shape2D, shape2Dtypes } from "../../nodes/Shape2D";
-import { colliderTypes } from "../../phys/collisions/colliders/ColliderInterface";
+import { colliderTypes } from "../../phys/collisions/colliders";
 import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

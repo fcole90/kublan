@@ -1,9 +1,6 @@
 import { Collider2D } from "../../nodes/Collider2D";
 import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
-import {
-  Collider2DInterface,
-  colliderTypes,
-} from "./colliders/ColliderInterface";
+import { Collider2DInterface, colliderTypes } from "./colliders";
 
 export interface CollisionData2D {
   depthDirection: Vector2;

@@ -1,9 +1,6 @@
 import { Rectangle } from "../../primitives/Rectangle";
 import { Vector2, Vector2Array } from "../../primitives/Vector2";
-import {
-  Collider2DInterface,
-  colliderTypes,
-} from "./colliders/ColliderInterface";
+import { Collider2DInterface, colliderTypes } from "./colliders";
 
 export const detectCollisions = (
   colliders: Collider2DInterface[]
