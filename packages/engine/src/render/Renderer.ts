@@ -29,9 +29,7 @@ export class Renderer {
 
   }
 
-  drawCircle(centerInitializer: Vector2Initializer, radius: number, color: string) {
-    const center = new Vector2(centerInitializer)
-
+  drawCircle(center: Readonly<Vector2>, radius: number, color: string) {
     this.ctx.fillStyle = color
     this.ctx.beginPath();
     this.ctx.arc(center.x, center.y, radius, 0, Math.PI * 2)

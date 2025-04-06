@@ -70,6 +70,10 @@ export class BaseNode {
     return this.__isRoot
   }
 
+  public setRoot(isRoot: boolean) {
+    this.__isRoot = isRoot
+  }
+
   public getChildren(): ReadonlyNodeMap {
     return this.childrenMap;
   }
@@ -105,6 +109,13 @@ export class BaseNode {
       if (childNode.isOnTree()) {
         childNode.onExitTree()
       }
+    }
+  }
+
+  public process(delta: number): void {
+    this._process(delta)
+    for (const [_, child] of this.childrenMap) {
+      child.process(delta)
     }
   }
 

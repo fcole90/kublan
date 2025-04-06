@@ -1,6 +1,8 @@
 import { ExampleGame } from "@examples/common/types"
 import { Core } from "./src/engine/Core"
 import { settings } from "./src/config/settings"
+import { Node2D } from "@kublan/engine/src/nodes/Node2D"
+import { Ball } from "./src/nodes/Ball"
 
 interface CreateGameCanvasOptions {
     size: { x: number, y: number }
@@ -47,8 +49,17 @@ const load: ExampleGame['load'] = async (rootElement) => {
 
     const physSandbox = new Core({
         ctx,
-        settings
-        // rootScene: new MainScene()
+        settings,
+        rootScene: new Node2D({
+            position: [0, 0],
+            children: [
+                new Ball({
+                    center: [400, 300],
+                    radius: 25,
+                    color: 'red'
+                })
+            ]
+        })
     })
     physSandbox.start()
 }

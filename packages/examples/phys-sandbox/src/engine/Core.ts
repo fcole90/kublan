@@ -1,22 +1,23 @@
 import { Renderer } from "@kublan/engine/src/render/Renderer"
 import { Settings } from "@kublan/engine/src/config/settings"
+import { Node2D } from "@kublan/engine/src/nodes/Node2D"
 
 export interface CoreConfig {
   ctx: CanvasRenderingContext2D,
   settings: Settings,
-  // rootScene: Scene2D,
+  rootScene: Node2D,
 }
 
 export class Core {
   private renderer: Renderer
   private shouldStop: boolean = true
-  private ctx: CanvasRenderingContext2D
-  // private root: Scene2D
+  // private ctx: CanvasRenderingContext2D
+  private root: Node2D
 
   constructor(config: CoreConfig) {
     this.renderer = new Renderer(config.ctx, config.settings)
-    // this.root = config.rootScene
-    this.ctx = config.ctx
+    this.root = config.rootScene
+    // this.ctx = config.ctx
   }
 
   start() {
@@ -28,9 +29,9 @@ export class Core {
 
   private loopSteps(eps: number) {
     // this.root._input([]) // TODO: input handling
-    // this.root._process(eps)
+    this.root.process(eps)
     // this.root._physicsProcess(eps)
-    // this.root._draw(this.renderer)
+    this.root.draw(this.renderer)
     console.log(eps)
   }
 

@@ -11,6 +11,10 @@ export class Vector2 {
   x: number
   y: number
 
+  static getDistance(pointA: Vector2Initializer, pointB: Vector2Initializer) {
+    return new Vector2(pointA).sub(new Vector2(pointB)).magnitude()
+  }
+
   constructor(initializer?: Vector2Initializer) {
     if (initializer == null) {
       this.x = 0
@@ -74,7 +78,17 @@ export class Vector2 {
     return [this.x, this.y]
   }
 
-  static getDistance(pointA: Vector2Initializer, pointB: Vector2Initializer) {
-    return new Vector2(pointA).sub(new Vector2(pointB)).magnitude()
+  copy(): Vector2 {
+    return new Vector2(this)
+  }
+
+  update(updateVector: Vector2Initializer): void {
+    if (updateVector instanceof Array) {
+      this.x = updateVector[0]
+      this.y = updateVector[1]
+    } else {
+      this.x = updateVector.x
+      this.y = updateVector.y
+    }
   }
 }
