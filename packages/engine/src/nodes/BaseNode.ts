@@ -1,51 +1,147 @@
+export type NodeId = string
+export type NodeMap = Map<NodeId, BaseNode>
+export type ReadonlyNodeMap = ReadonlyMap<NodeId, BaseNode>
+
 export interface BaseNodeConfig {
   name?: string
+  children?: ReadonlyArray<BaseNode> | ReadonlyNodeMap
 }
 
 const NODE_NAME = "BaseNode"
 
-export class BaseNode {
-  readonly id: string;
-  readonly name: string;
-  protected readonly children: BaseNode[];
 
-  private isOnTree_: boolean = false;
+export class BaseNode {
+  public readonly id: NodeId;
+  public readonly name: string;
+
+  private __isOnTree: boolean = false;
+  private __isRoot: boolean = false;
+  private __parentNode: BaseNode | null = null;
+
+  private readonly childrenMap: NodeMap;
 
   constructor(config?: BaseNodeConfig) {
     this.id = crypto.randomUUID()
     this.name = config?.name ?? `${NODE_NAME}-${this.id}`;
-    this.children = []
+
+    // Children
+    this.childrenMap = new Map<string, BaseNode>()
+    if (config?.children instanceof Array) {
+      for (const child of config.children) {
+        this.addChild(child)
+      }
+    } else if (config?.children instanceof Map) {
+      for (const [_, child] of config.children as ReadonlyNodeMap) {
+        this.addChild(child)
+      }
+    }
   }
 
-  private _onEnterTree() {
-    this.isOnTree_ = true
-    this.onEnterTree()
+  public addChild(childNode: BaseNode) {
+    this.__addChild(childNode)
+    this.onAdded(this)
+    if (this.__isOnTree && !childNode.isOnTree()) {
+      childNode.onEnterTree();
+    }
+    if (!this.__isOnTree && childNode.isOnTree()) {
+      childNode.onEnterTree();
+    }
   }
 
-  private _onExitTree() {
-    this.isOnTree_ = false
-    this.onExitTree()
+  public transferChild(childNode: BaseNode, parentNode: BaseNode) {
+    this.__removeChild(childNode.id)
+    childNode.onRemoved()
+    parentNode.addChild(childNode)
+  }
+
+  public removeChild(childNode: BaseNode) {
+    this.__removeChild(childNode.id)
+    childNode.onRemoved()
+    if (this.__isOnTree && childNode.isOnTree()) {
+      childNode.onExitTree();
+    }
   }
 
   public isOnTree() {
-    return this.isOnTree_
+    return this.__isOnTree
   }
 
-  protected onEnterTree() { }
-  protected onExitTree() { }
-
-  addChild(childNode: BaseNode) {
-    this.children.push(childNode);
-    childNode._onEnterTree();
+  public isRoot() {
+    return this.__isRoot
   }
 
-  removeChild(childNode: BaseNode) {
-    const nodeIndex = this.children.findIndex((node) => node === childNode);
-    this.children.splice(nodeIndex, 1);
-    childNode._onExitTree();
+  public getChildren(): ReadonlyNodeMap {
+    return this.childrenMap;
   }
 
-  getChildren(): Readonly<Array<BaseNode>> {
-    return this.children;
+  public getParent(): Readonly<BaseNode | null> {
+    return this.__parentNode;
+  }
+
+  public onAdded(parentNode: BaseNode): void {
+    this.__parentNode = parentNode
+    this._onAdded(parentNode)
+  }
+
+  public onRemoved(): void {
+    this.__parentNode = null;
+    this._onRemoved()
+  }
+
+  public onEnterTree() {
+    this.__isOnTree = true
+    this._onEnterTree()
+    for (const [_, childNode] of this.childrenMap) {
+      if (!childNode.isOnTree()) {
+        childNode.onEnterTree()
+      }
+    }
+  }
+
+  public onExitTree() {
+    this.__isOnTree = false
+    this._onExitTree()
+    for (const [_, childNode] of this.childrenMap) {
+      if (childNode.isOnTree()) {
+        childNode.onExitTree()
+      }
+    }
+  }
+
+  /** Override this method in your custom node class. */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected _onAdded(parentNode: BaseNode): void { }
+
+  /** Override this method in your custom node class. */
+  protected _onRemoved(): void { }
+
+  /** Override this method in your custom node class. */
+  protected _onEnterTree(): void { }
+
+  /** Override this method in your custom node class. */
+  protected _onExitTree(): void { }
+
+  /** Override this method in your custom node class. */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected _process(delta: number): void { }
+
+  /**
+   * @throws If the node does not exist.
+   */
+  private __removeChild(childNodeId: string): void {
+    const existed = this.childrenMap.delete(childNodeId)
+    if (!existed) {
+      throw new Error(`Attempted removing nonexisting child node with id "${childNodeId}" from node with id "${this.id}".`)
+    }
+  }
+
+  /**
+   * @throws If the node already exists.
+   */
+  private __addChild(childNode: BaseNode): void {
+    if (this.childrenMap.has(childNode.id)) {
+      throw new Error(`Attempted adding already existing child node with id "${childNode.id}" from node with id "${this.id}".`)
+    }
+    this.childrenMap.set(childNode.id, childNode)
   }
 }
