@@ -31,6 +31,7 @@ export class Core {
     // this.root._input([]) // TODO: input handling
     this.root.process(eps)
     // this.root._physicsProcess(eps)
+    this.renderer.clear()
     this.root.draw(this.renderer)
     console.log(eps)
   }

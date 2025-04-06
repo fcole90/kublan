@@ -18,7 +18,7 @@ export class Node2D extends BaseNode implements Drawable {
   }
 
   public draw(renderer: Renderer): void {
-    this.__draw(renderer)
+    this._draw(renderer)
     for (const [_, child] of this.getChildren()) {
       if (isDrawableNode(child)) {
         child.draw(renderer)
@@ -37,5 +37,5 @@ export class Node2D extends BaseNode implements Drawable {
 
   /** Override this method in your custom node class. */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected __draw(renderer: Renderer): void { }
+  protected _draw(renderer: Renderer): void { }
 }
