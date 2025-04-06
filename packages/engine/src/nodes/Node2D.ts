@@ -1,4 +1,4 @@
-import { Vector2, Vector2Initializer } from "../primitives/Vector2";
+import { Vector2Initializer } from "../primitives/Vector2";
 import { Renderer } from "../render/Renderer";
 import { BaseNode, BaseNodeConfig } from "./BaseNode";
 import { Drawable, DrawableConfig, isDrawableNode } from "./Drawable";
@@ -10,13 +10,6 @@ export interface Node2DConfig extends BaseNodeConfig, DrawableConfig {
 
 
 export class Node2D extends BaseNode implements Drawable {
-  private readonly position: Vector2
-
-  constructor(config: Node2DConfig) {
-    super(config)
-    this.position = new Vector2(config.position)
-  }
-
   public draw(renderer: Renderer): void {
     this._draw(renderer)
     for (const [_, child] of this.getChildren()) {
@@ -24,15 +17,6 @@ export class Node2D extends BaseNode implements Drawable {
         child.draw(renderer)
       }
     }
-  }
-
-  public getPosition(): Vector2 {
-    return this.position.copy()
-  }
-
-  public setPosition(position: Readonly<Vector2>) {
-    this.position.x = position.x
-    this.position.y = position.y
   }
 
   /** Override this method in your custom node class. */

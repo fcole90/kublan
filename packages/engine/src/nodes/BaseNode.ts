@@ -1,3 +1,5 @@
+import { Vector2, Vector2Initializer } from "../primitives/Vector2"
+
 export type NodeId = string
 export type NodeMap = Map<NodeId, BaseNode>
 export type ReadonlyNodeMap = ReadonlyMap<NodeId, BaseNode>
@@ -5,6 +7,7 @@ export type ReadonlyNodeMap = ReadonlyMap<NodeId, BaseNode>
 export interface BaseNodeConfig {
   name?: string
   children?: ReadonlyArray<BaseNode> | ReadonlyNodeMap
+  position?: Vector2Initializer
 }
 
 const NODE_NAME = "BaseNode"
@@ -19,10 +22,12 @@ export class BaseNode {
   private __parentNode: BaseNode | null = null;
 
   private readonly childrenMap: NodeMap;
+  protected position: Vector2
 
   constructor(config?: BaseNodeConfig) {
     this.id = crypto.randomUUID()
     this.name = config?.name ?? `${NODE_NAME}-${this.id}`;
+    this.position = new Vector2(config?.position)
 
     // Children
     this.childrenMap = new Map<string, BaseNode>()
@@ -35,6 +40,19 @@ export class BaseNode {
         this.addChild(child)
       }
     }
+  }
+
+  public getPosition(): Vector2 {
+    return this.position.copy()
+  }
+
+  public getAbsolutePosition(): Vector2 {
+    const parentPosition = this.getParent()?.getAbsolutePosition() ?? new Vector2()
+    return parentPosition.add(this.position)
+  }
+
+  public setPosition(position: Readonly<Vector2>) {
+    this.position.update(position)
   }
 
   public addChild(childNode: BaseNode) {
