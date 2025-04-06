@@ -9,5 +9,5 @@ export class KinematicBody2D extends PhysicsBody2D {
     super(config);
   }
 
-  _physicsProcess(_delta: number) {}
+  override _physicsProcess(_delta: number) {}
 }

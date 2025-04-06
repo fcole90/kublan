@@ -20,11 +20,11 @@ export class Ball extends RigidBody2D {
       Math.cos(radiantDirectionAngle),
       Math.sin(radiantDirectionAngle),
     ] as const;
-    const direction = new Vector2(directionInitializer).norm();
+    const direction = Vector2.from(directionInitializer).normalized();
 
     super({
       ...config,
-      position: new Vector2(config.position),
+      position: Vector2.from(config.position),
       initialVelocity: direction.mul(speed),
     });
 
@@ -51,13 +51,13 @@ export class Ball extends RigidBody2D {
       collisionBox.x + collisionBox.w >
       settings.viewportSize.x
     ) {
-      this.velocity = new Vector2([-this.velocity.x, this.velocity.y]);
+      this.velocity = new Vector2(-this.velocity.x, this.velocity.y);
     }
     if (
       collisionBox.y < 0 ||
       collisionBox.y + collisionBox.h > settings.viewportSize.y
     ) {
-      this.velocity = new Vector2([this.velocity.x, -this.velocity.y]);
+      this.velocity = new Vector2(this.velocity.x, -this.velocity.y);
     }
 
     // Continue normal phys

@@ -6,7 +6,7 @@ export interface PhysSandboxSettings extends Settings {
 }
 
 export const settings = {
-  viewportSize: new Vector2([800, 600]),
+  viewportSize: Vector2.from([800, 600]),
   pageBackgroundColor: 'pink',
   targetFPS: 30,
 } satisfies PhysSandboxSettings;

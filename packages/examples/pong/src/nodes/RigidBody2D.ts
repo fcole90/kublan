@@ -15,7 +15,7 @@ export interface RigidBody2DConfig extends PhysicsBody2DConfig {
 export class RigidBody2D extends PhysicsBody2D {
   constructor(config: RigidBody2DConfig) {
     super(config);
-    this.velocity = new Vector2(config.initialVelocity);
+    this.velocity = Vector2.from(config.initialVelocity);
   }
 
   /** Simplified from https://stackoverflow.com/a/573206 */

@@ -27,7 +27,7 @@ export class BaseNode {
   constructor(config?: BaseNodeConfig) {
     this.id = crypto.randomUUID()
     this.name = config?.name ?? `${NODE_NAME}-${this.id}`;
-    this.position = new Vector2(config?.position)
+    this.position = Vector2.from(config?.position)
 
     // Children
     this.childrenMap = new Map<string, BaseNode>()
@@ -52,7 +52,7 @@ export class BaseNode {
   }
 
   public setPosition(position: Readonly<Vector2>) {
-    this.position.update(position)
+    this.position.updateInPlace(position)
   }
 
   public addChild(childNode: BaseNode) {

@@ -36,9 +36,9 @@ export class Node2D {
   private children: Array<Node2D> = [];
 
   constructor(config: Node2DConfig) {
-    this.position = new Vector2(config.position);
-    this.size = new Vector2(config.size);
-    this.absoluteParentPosition = new Vector2(config.absoluteParentPosition);
+    this.position = Vector2.from(config.position);
+    this.size = Vector2.from(config.size);
+    this.absoluteParentPosition = Vector2.from(config.absoluteParentPosition);
     this.id = Symbol(config.id);
     if (config.children) {
       for (const child of config.children) {
@@ -67,15 +67,15 @@ export class Node2D {
   }
 
   setPosition(position: Vector2Initializer) {
-    this.position = new Vector2(position);
+    this.position = Vector2.from(position);
   }
 
   translate(offset: Vector2Initializer) {
-    this.setPosition(this.position.add(new Vector2(offset)));
+    this.setPosition(this.position.add(Vector2.from(offset)));
   }
 
   _setAbsoluteParentPosition(position: Vector2Initializer) {
-    this.absoluteParentPosition = new Vector2(position);
+    this.absoluteParentPosition = Vector2.from(position);
   }
 
   _getAbsolutePosition(): Readonly<Vector2> {
@@ -87,7 +87,7 @@ export class Node2D {
   }
 
   setSize(size: Vector2Initializer) {
-    this.size = new Vector2(size);
+    this.size = Vector2.from(size);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

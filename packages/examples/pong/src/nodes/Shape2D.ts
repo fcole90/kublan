@@ -1,4 +1,7 @@
-import { Vector2Initializer } from '@kublan/engine/src/primitives/Vector2';
+import {
+  Vector2,
+  Vector2Initializer,
+} from '@kublan/engine/src/primitives/Vector2';
 import { Renderer } from '@kublan/engine/src/render/Renderer';
 import { checkExhaustiveCondition } from '@kublan/engine/src/utils/typing/checkExhaustiveConditon';
 import { Node2D, Node2DConfig } from './Node2D';
@@ -26,9 +29,18 @@ export class Shape2D extends Node2D {
     this.shapeType = config.shapeType;
   }
 
-  _draw(renderer: Renderer) {
+  override _draw(renderer: Renderer) {
     switch (this.shapeType) {
       case shape2Dtypes.rectangle: {
+        console.log('Shape2D._draw:', {
+          id: this.id,
+          color: this.color,
+          shapeType: this.shapeType,
+          'this._getAbsolutePosition()': this._getAbsolutePosition(),
+          'this._getAbsolutePosition().toArray()':
+            this._getAbsolutePosition().toArray(),
+          'this.getSize().toArray()': this.getSize().toArray(),
+        });
         renderer.drawRectangle(
           [
             ...this._getAbsolutePosition().toArray(),
@@ -43,7 +55,7 @@ export class Shape2D extends Node2D {
         const position = this._getAbsolutePosition();
         const size = this.getSize();
         renderer.drawCircle(
-          [position.x + size.x / 2, position.y + size.y / 2],
+          new Vector2(position.x + size.x / 2, position.y + size.y / 2),
           size.x / 2,
           this.color,
         );

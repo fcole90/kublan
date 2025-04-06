@@ -57,6 +57,6 @@ export abstract class Collider2D extends Node2D implements Collider2DInterface {
   getCenter() {
     const position = this._getAbsolutePosition();
     const size = this.getSize();
-    return new Vector2([position.x + size.x / 2, position.y + size.y / 2]);
+    return new Vector2(position.x + size.x / 2, position.y + size.y / 2);
   }
 }

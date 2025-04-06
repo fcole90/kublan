@@ -21,7 +21,7 @@ export class Paddle extends KinematicBody2D {
 
   constructor(config: PaddleNodeConfig) {
     super({
-      position: new Vector2(config.position),
+      position: Vector2.from(config.position),
     });
     this.config = config;
 
@@ -57,14 +57,14 @@ export class Paddle extends KinematicBody2D {
     });
   }
 
-  _ready() {
+  override _ready() {
     if (this.config.isUserControlled) {
       this.setupInputHandling();
     }
   }
 
   getInputVector() {
-    const direction = new Vector2([0, 0]);
+    const direction = Vector2.from([0, 0]);
     if (this.pressedKeys.has('w')) {
       direction.y -= 1;
     }
@@ -83,18 +83,18 @@ export class Paddle extends KinematicBody2D {
     if (direction.toArray().includes(NaN)) {
       throw new Error('Direction is NAN');
     }
-    return direction.norm();
+    return direction.normalized();
   }
 
-  _physicsProcess(delta: number) {
+  override _physicsProcess(delta: number) {
     // console.log(this.pressedKeys)
     const direction = this.getInputVector();
     // console.log('Input:', direction)
     if (!direction.isNull()) {
       // console.log('Input:', direction)
       console.log('Input:', direction);
-      const normDir = direction.norm();
-      const translation = new Vector2([
+      const normDir = direction.normalized();
+      const translation = Vector2.from([
         normDir.x * this.speed * delta,
         normDir.y * this.speed * delta,
       ]);

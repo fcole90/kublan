@@ -47,10 +47,10 @@ const getCircleToCircleCollisionData = (
   const circleBoxB = circleColliderB.getBoundingBox();
   const circleCenterB = circleBoxB.getCenter();
 
-  const collisionSurfaceNormal = new Vector2([
+  const collisionSurfaceNormal = new Vector2(
     circleCenterB.x - circleCenterA.x,
     circleCenterB.y - circleCenterA.y,
-  ]).norm();
+  ).normalized();
 
   const depthDirection = collisionSurfaceNormal.mul(circleRadiusA);
 

@@ -1,7 +1,6 @@
 {
   "files.eol": "\n",
   "files.insertFinalNewline": true,
-  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
@@ -10,6 +9,7 @@
       "mode": "auto"
     }
   ],
+  "json.format.enable": true,
   "typescript.tsdk": "./node_modules/typescript/lib",
   "cSpell.words": [
     "kublan"

@@ -5,7 +5,7 @@ import { Ball } from './Ball';
 import { Paddle } from './Paddle';
 
 export class MainScene extends Scene2D {
-  _ready(): void {
+  override _ready(): void {
     const field = new Shape2D({
       position: [0, 0],
       size: settings.viewportSize,

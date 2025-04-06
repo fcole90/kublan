@@ -19,24 +19,24 @@ export class PhysicsBody2D extends Node2D {
 
     const position = super.getPosition();
     const size = super.getSize();
-    this.centerOfMass = new Vector2([
+    this.centerOfMass = Vector2.from([
       position.x + size.x / 2,
       position.y + size.y / 2,
     ]);
 
-    this.velocity = new Vector2(config.initialVelocity);
+    this.velocity = Vector2.from(config.initialVelocity);
   }
 
   private updateColliders() {
     this.colliders = treeToArray(this).filter((n) => n instanceof Collider2D);
   }
 
-  addChild(childNode: Node2D): void {
+  override addChild(childNode: Node2D): void {
     super.addChild(childNode);
     this.updateColliders();
   }
 
-  removeChild(childNode: Node2D): void {
+  override removeChild(childNode: Node2D): void {
     super.removeChild(childNode);
     this.updateColliders();
   }
