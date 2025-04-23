@@ -1,8 +1,8 @@
-import { Settings } from "@kublan/engine/src/config/settings";
-import { Vector2 } from "@kublan/engine/src/primitives/Vector2";
+import { Settings } from '@kublan/engine/src/config/settings';
+import { Vector2 } from '@kublan/engine/src/primitives/Vector2';
 
 export interface PhysSandboxSettings extends Settings {
-  pageBackgroundColor: string
+  pageBackgroundColor: string;
 }
 
 export const settings = {

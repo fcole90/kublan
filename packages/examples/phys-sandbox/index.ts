@@ -1,7 +1,9 @@
-import { ExampleGame } from '@examples/common/types';
-import { Core } from './src/engine/Core';
-import { settings } from './src/config/settings';
+import { Core } from '@kublan/engine/src/engine/Core';
 import { Node2D } from '@kublan/engine/src/nodes/Node2D';
+
+import { ExampleGame } from '@examples/common/types';
+
+import { settings } from './src/config/settings';
 import { Ball } from './src/nodes/Ball';
 
 interface CreateGameCanvasOptions {
@@ -12,19 +14,19 @@ const resetHTML = (rootElement: HTMLElement, backgroundColor: string) => {
   document.getElementsByTagName('body')[0]?.setAttribute(
     'style',
     `
-        box-sizing: border-box;
-        margin: 0;
-        `,
+    box-sizing: border-box;
+    margin: 0;
+    `,
   );
   rootElement.setAttribute(
     'style',
     `
-        background-color: ${backgroundColor};
-        display: flex;
-        height: 100vh;
-        width: 100vw;
-        margin: 0;
-        `,
+    background-color: ${backgroundColor};
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    `,
   );
 };
 
@@ -37,9 +39,9 @@ const createGameCanvas = ({
   canvas.setAttribute(
     'style',
     `
-         image-rendering: pixelated;
-         background-color: black;
-        `,
+    image-rendering: pixelated;
+    background-color: black;
+    `,
   );
 
   return canvas;
@@ -64,8 +66,13 @@ const load: ExampleGame['load'] = async (rootElement) => {
       position: [0, 0],
       children: [
         new Ball({
-          center: [400, 300],
-          radius: 25,
+          center: [200, 300],
+          radius: 55,
+          color: 'red',
+        }),
+        new Ball({
+          center: [500, 300],
+          radius: 20,
           color: 'red',
         }),
       ],
